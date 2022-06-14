@@ -1,0 +1,9 @@
+body{
+    background: gray;
+}
+
+.card_back{
+    margin-top: 30px;
+    background: white;
+    text-align: center;
+}
