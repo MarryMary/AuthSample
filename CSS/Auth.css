@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&display=swap');
+
+html,
+body,
+div.background {
+    height: 100%; /* 「div.background」に対してはmin-heightに対応していないブラウザ用 */
+}
+
+div.background {
+    min-height: 100%; /* 最小の高さ */
+    background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+}
+
+body > div.background {
+    height: auto; /* 要素を超えた分の背景が伸びないブラウザ用 */
+}
+
+.card{
+    backgroud: white;
+    padding: 2%;
+    margin: 0;
+    box-shadow: 0 0 8px gray;
+}
+
+h1, h2, p{
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+input{
+    border-bottom:1px solid #cccccc !important;
+    border-right:none !important;
+    border-left:none !important;
+    border-top:none !important;
+    border-radius:0px !important;
+}
