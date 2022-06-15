@@ -43,9 +43,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         }
                     }
                 }else{
-                    $_SESSION['IsAuth'] = True;
-                    $_SESSION['UserId'] = $data['id'];
-                    header('Location: /AuthSample/mypage.php');
+                    if($data['IsTwoFactor'] == 1){
+                        $_SESSION['NeedTwoFactor'] = True;
+                        $_SESSION["secret"] = $data['TwoFactorSecret'];
+                        $_SESSION["IsAuth"] = False;
+                        $_SESSION["UserId"] = $data['id'];
+                        header('Location: /AuthSample/TwoFactor/whichTwoFactor.php');
+                    }else{
+                        $_SESSION['IsAuth'] = True;
+                        $_SESSION['UserId'] = $data['id'];
+                        header('Location: /AuthSample/mypage.php');
+                    }
                 }
             }else{
                 $_SESSION['err'] = 'エラーが発生しました。もう一度お試し下さい。';

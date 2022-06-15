@@ -4,6 +4,10 @@ include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
 SessionStarter();
 
+if(isset($_SESSION["IsAuth"])){
+    header("Location: mypage.php");
+}
+
 $title = 'Login';
 $card_name = 'ログイン';
 $message = '続行するにはログインしてください。';

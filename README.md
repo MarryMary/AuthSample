@@ -23,6 +23,8 @@
 |pass|VARCHAR(255) NOT NULL||
 |user_pict|VARCHAR(255) NOT NULL|        ユーザー画像を保存するパスを入力する        |
 |GAuthID|VARCHAR(255)| Google SSOで使用される個人識別用のIDをインサートする |
+|IsTwoFactor|INT(1) NOT NULL DEFAULT 0|        2段階認証が必要な場合は1、通常は0         |
+|TwoFactorSecret|VARCHAR(255)|        2段階認証のシークレットを保存         |
 |delete_at|DATETIME|    削除を希望した時点の時間を入力。30日後に物理削除     |
 |delete_flag|INT(1) NOT NULL DEFAULT 0|        論理削除時にフラグを1に、通常は0         |
 ---

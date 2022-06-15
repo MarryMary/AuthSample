@@ -1,0 +1,26 @@
+.glass{
+    margin-top: 10px;
+    background:rgba(0, 187, 255, 0.323);
+}
+
+.profile{
+    text-align: center;
+    margin: 10px;
+    background-color: white;
+    padding: 10px;
+}
+
+.menu{
+    margin: 10px;
+    background-color: white;
+    padding: 10px;
+}
+
+.menu a{
+    text-decoration: none;
+    color: black;
+}
+
+.selector:hover{
+    opacity: 0.5;
+}
