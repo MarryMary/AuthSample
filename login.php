@@ -14,6 +14,8 @@ if(array_key_exists('err', $_SESSION)){
     unset($_SESSION['err']);
 }
 
+$GAuthJS = '<script src="https://accounts.google.com/gsi/client" async defer></script><div id="g_id_onload" data-client_id="345840626602-q37bp5di0lrr53n3bar423uhg90rff67.apps.googleusercontent.com" data-callback="AuthorizeStart"></div>';
+
 $form = <<<EOF
 <form action="Process/Auth.php" method="POST">
     <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;'>
@@ -29,6 +31,18 @@ $form = <<<EOF
 
 EOF;
 
+$GAuthButton = <<<EOF
+<br>
+<div class="g_id_signin"
+     data-type="standard"
+     data-size="large"
+     data-theme="outline"
+     data-text="sign_in_with"
+     data-shape="rectangular"
+     data-logo_alignment="left">
+</div>
+EOF;
+
 $option = <<<EOF
 <p>アカウントをお持ちではありませんか？<a href="#">新規登録</a></p>
 <p>パスワードをお忘れですか？<a href="#">パスワードのリセット</a></p>
@@ -36,5 +50,6 @@ EOF;
 
 
 $scriptTo = 'JavaScript/Login.js';
+$JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
 include dirname(__FILE__).'/Template/BaseTemplate.php';
