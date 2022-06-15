@@ -1,5 +1,6 @@
 <?php
 include 'Tools/IsInGetTools.php';
+include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 SessionStarter();
 if(isset($_SESSION['finished'])){
     $_SESSION = array();
@@ -20,10 +21,7 @@ if(isset($_SESSION['finished'])){
 </p>
 EOF;
 
-    $option = <<<EOF
-<p>アカウントをお持ちではありませんか？<a href="#">新規登録</a></p>
-<p>パスワードをお忘れですか？<a href="#">パスワードのリセット</a></p>
-EOF;
+    $option = '';
 
 
     $scriptTo = 'JavaScript/Login.js';

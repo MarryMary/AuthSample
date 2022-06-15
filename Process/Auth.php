@@ -7,7 +7,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $res = $stmt->execute();
         if($res) {
             $data = $stmt->fetch();
-            $password = $data['password'];
+            $password = $data['pass'];
             if(!is_bool($data) && password_verify($_POST['password'], $password)){
                 $_SESSION['IsAuth'] = True;
                 $_SESSION['UserId'] = $data['id'];

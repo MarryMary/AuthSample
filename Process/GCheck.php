@@ -10,10 +10,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 include dirname(__FILE__).'/../Tools/Uploader.php';
                 if(isset($file)){
                     $_SESSION['filename'] = $file;
+                    header('Location: /AuthSample/GAuthAddCheck.php');
                 }else{
                     $_SESSION['err'] = "ファイルのアップロードに失敗しました。";
+                    header('Location: /AuthSample/GAuthAdd.php');
                 }
-                header('Location: /AuthSample/GAuthAddCheck.php');
             }else{
                 $_SESSION['err'] = 'メールアドレスまたはパスワードが条件に一致しません。';
                 header('Location: /AuthSample/GAuthAdd.php');

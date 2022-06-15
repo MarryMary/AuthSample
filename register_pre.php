@@ -8,7 +8,7 @@ $title = 'Registration';
 $card_name = '新規登録';
 $message = '続行するにはメールアドレスを入力して下さい。';
 $errtype = False;
-if(array_key_exists('err', $_SESSION)){
+if(isset($_SESSION["err"])){
     $errtype = True;
     $message = $_SESSION['err'];
     unset($_SESSION['err']);
@@ -22,9 +22,6 @@ $form = <<<EOF
     </div>
 </form>
 <br>
-<div style="text-align: center;">
-    <h2>または</h2>
-</div>
 
 EOF;
 

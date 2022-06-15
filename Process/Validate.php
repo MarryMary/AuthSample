@@ -8,12 +8,13 @@ function PasswordValid(String $password): bool
 {
     $max = 16;
     $min = 8;
-    if(trim($password) <= $max && trim($password) >= $min){
+    if(strlen(trim($password)) <= $max && strlen(trim($password)) >= $min){
         $flag = False;
         $mark = ['?', '!', '#', ','];
         foreach($mark as $m){
             if(strpos($password,$m) !== false){
                 $flag = True;
+                return $flag;
             }
         }
         return $flag;
@@ -26,7 +27,7 @@ function UserNameValid(String $UserName): bool
 {
     $max = 50;
     $min = 1;
-    if(trim($UserName) <= $max && trim($UserName) >= $min){
+    if(strlen(trim($UserName)) <= $max && strlen(trim($UserName)) >= $min){
         return True;
     }else{
         return False;

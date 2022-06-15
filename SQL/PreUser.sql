@@ -1,0 +1,7 @@
+CREATE TABLE PreUser(
+    id INT NOT NULL AUTO_INCREMENT,
+    user_token VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    register_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    register_type INT(1) NOT NULL
+)

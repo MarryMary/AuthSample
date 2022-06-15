@@ -15,7 +15,7 @@
         <div class="mx-auto" style="width:50%;">
             <div class="card">
                 <h1><?= h($card_name) ?></h1>
-                <p style="color: <?php $errtype ? 'red' : 'black' ?>;" id="message"><?= h($message) ?></p>
+                <p style="color: <?= $errtype ? 'red' : 'black' ?>;" id="message"><?= h($message) ?></p>
                 <hr>
                 <?= $form ?>
                 <div style="margin: auto;">
@@ -27,8 +27,9 @@
             </div>
         </div>
     </div>
-    <?=isset($JS) ? $JS : ''; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="<?= $scriptTo ?>"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <?=isset($JS) ? $JS : ''; ?>
+    <script src="<?=isset($scriptTo) ? $scriptTo : ''; ?>"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-include dirname(__FILE__).'/../IsInGetTools.php';
+include dirname(__FILE__).'/../Tools/IsInGetTools.php';
 SessionStarter();
 $_SESSION = array();
 if( ini_get( 'session.use_cookies' ) )

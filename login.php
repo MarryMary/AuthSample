@@ -44,7 +44,7 @@ $GAuthButton = <<<EOF
 EOF;
 
 $option = <<<EOF
-<p>アカウントをお持ちではありませんか？<a href="#">新規登録</a></p>
+<p>アカウントをお持ちではありませんか？<a href="register_pre.php">新規登録</a></p>
 <p>パスワードをお忘れですか？<a href="#">パスワードのリセット</a></p>
 EOF;
 
