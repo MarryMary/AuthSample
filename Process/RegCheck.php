@@ -13,20 +13,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $_SESSION['filename'] = $file;
                 }else{
                     $_SESSION['err'] = "ファイルのアップロードに失敗しました。";
-                    header('Location: /AuthSample/MainRegistration.php');
+                    header('Location: /AuthSample/MainRegistration.php?token='.$_SESSION['token']);
                 }
                 header('Location: /AuthSample/RegCheck.php');
             }else{
                 $_SESSION['err'] = 'メールアドレスまたはパスワード、ユーザー名のいずれかが条件に一致しません。';
-                header('Location: /AuthSample/MainRegistration.php');
+                header('Location: /AuthSample/MainRegistration.php?token='.$_SESSION['token']);
             }
         }else{
             $_SESSION['err'] = 'パスワードが一致しません。';
-            header('Location: /AuthSample/MainRegistration.php');
+            header('Location: /AuthSample/MainRegistration.php?token='.$_SESSION['token']);
         }
     }else{
         $_SESSION['err'] = 'メールアドレスまたはパスワードが入力されていません。';
-        header('Location: /AuthSample/MainRegistration.php');
+        header('Location: /AuthSample/MainRegistration.php?token='.$_SESSION['token']);
     }
 }else{
     header('Location: /AuthSample/login.php');

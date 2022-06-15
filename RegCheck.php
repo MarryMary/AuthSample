@@ -3,7 +3,7 @@ include dirname(__FILE__).'/Tools/IsInGetTools.php';
 include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
 SessionStarter();
-if(isset($_SESSION['email']) && isset($_SESSION['userid'])){
+if(isset($_SESSION['email']) && isset($_SESSION['username']) && isset($_SESSION['username'])){
     $title = 'Registration';
     $card_name = '新規登録';
     $message = '以下の内容で登録します。';
@@ -34,7 +34,7 @@ if(isset($_SESSION['email']) && isset($_SESSION['userid'])){
         <div style="text-align: center">
             <img src='{$file}' alt='profile' width='200' height='200'>
         </div>
-        <div class="text-centering">
+        <div style="text-align: center; margin-top: 10px;">
             <button type="button" class="btn btn-primary" onclick="history.back()" style="width: 40%;">戻る</button>
             <button type="submit" class="btn btn-success" style="width: 40%;">登録</button><br>
         </div>
@@ -48,7 +48,8 @@ if(isset($_SESSION['email']) && isset($_SESSION['userid'])){
 
 
     $scriptTo = 'JavaScript/Register.js';
-    $JS = '';
+    $JS = '<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cropper/1.0.1/jquery-cropper.js" type="text/javascript"></script>';
 
     include dirname(__FILE__).'/Template/BaseTemplate.php';
 }else{

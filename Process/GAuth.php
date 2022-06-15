@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         $data = $stmt->fetch();
                         if(!is_bool($data)){
                             $userid = $payload['sub'];
-                            $stmt = $pdo->prepare("UPDATE User Where email = :email SET GAuthID = :id");
+                            $stmt = $pdo->prepare("UPDATE User SET GAuthID = :id Where email = :email");
                             $stmt->bindParam( ':email', $payload['email'], PDO::PARAM_STR);
                             $stmt->bindParam( ':id', $userid, PDO::PARAM_STR);
                             $res = $stmt->execute();

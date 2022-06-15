@@ -1,5 +1,5 @@
 <?php
-include_once dirname(__FILE__).'/../Tools/IsInGetTools.php';
+include dirname(__FILE__).'/../Tools/IsInGetTools.php';
 SessionStarter();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['email'])) {
@@ -20,10 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt->bindParam(':register_type', $type, PDO::PARAM_INT);
                 $res = $stmt->execute();
                 if ($res) {
-                    include dirname(__FILE__).'/../Tools/IsInGetTools.php';
                     include dirname(__FILE__).'/../Tools/MailSender.php';
-                    include 'UUID.php';
-                    SessionStarter();
                     $template = file_get_contents('mainregist.html');
                     $template = str_replace('{{SERVICENAME}}', 'HolyLive', $template);
                     $template = str_replace('{{URL}}', 'http://localhost/AuthSample/MainRegistration.php?token='.$uuid, $template);
