@@ -9,9 +9,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = $stmt->fetch();
             $password = $data['pass'];
             if(!is_bool($data) && password_verify($_POST['password'], $password)){
-                $_SESSION['IsAuth'] = True;
-                $_SESSION['UserId'] = $data['id'];
-                header('Location: /AuthSample/mypage.php');
+                if($data['IsTwoFactor'] == 1){
+                    $_SESSION['IsAuth'] = False;
+                    $_SESSION['UserId'] = $data['id'];
+                    header('Location: /AuthSample/TwoFactor/whichTwoFactor.php');
+                }else{
+                    $_SESSION['IsAuth'] = True;
+                    $_SESSION['UserId'] = $data['id'];
+                    header('Location: /AuthSample/mypage.php');
+                }
             }else{
                 $_SESSION['err'] = 'メールアドレスまたはパスワードが間違っています。';
                 header('Location: /AuthSample/login.php');
