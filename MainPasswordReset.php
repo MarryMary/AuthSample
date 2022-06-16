@@ -34,9 +34,9 @@ if(isset($_GET["token"])){
             $email = $result['email'];
 
 
-            $title = 'Registration';
-            $card_name = '新規登録';
-            $message = 'ログインを行う前に以下の情報を追加して下さい。';
+            $title = 'Forget';
+            $card_name = 'パスワードのリセット';
+            $message = 'パスワードのリセットを行うには以下の情報を追加して下さい。';
             $errtype = False;
             if(array_key_exists('err', $_SESSION)){
                 $errtype = True;
@@ -44,34 +44,16 @@ if(isset($_GET["token"])){
                 unset($_SESSION['err']);
             }
 
-            // cropper.js関連のCSSを読み込み
-            $GAuthJS = <<<EOF
-<link href="//cdnjs.cloudflare.com/ajax/libs/cropper/3.1.6/cropper.min.css" rel="stylesheet">
-<script src="//cdnjs.cloudflare.com/ajax/libs/cropper/3.1.6/cropper.min.js"></script>
-EOF;
-
             // フォーム作成
             $form = <<<EOF
-<form action="Process/RegCheck.php" method="POST" enctype="multipart/form-data">
-    <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;' value='{$result['email']}' disabled>
-    <div class="mb-3">
-        <input type='text' name='username' class="form-control" placeholder='ユーザー名'>
-        <div id="emailHelp" class="form-text">ユーザー名は空白を除く1字以上50字以下である必要があります。</div>
-    </div>
+<form action="Process/PassForget.php" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <input type='password' name='password1' class="form-control" placeholder='パスワード'>
         <div id="emailHelp" class="form-text">パスワードは8字以上16字以下で、「?、!、#、,」のいずれかの記号が入っている必要があります。</div>
     </div>
     <input type='password' name='password2' class="form-control" placeholder='パスワード(確認用)' style='margin-bottom: 3%;'>
-    <p>プロフィール画像</p>
-    <input type="file" name="UserPict" id="UserImage">
-    <img id="selectImage" style="max-width:500px;">
-    <input type="hidden" id="imageX" name="UserImageX" value="0"/>
-    <input type="hidden" id="imageY" name="UserImageY" value="0"/>
-    <input type="hidden" id="imageW" name="UserImageW" value="0"/>
-    <input type="hidden" id="imageH" name="UserImageH" value="0"/>
     <div style="text-align: center; margin-top: 10px;">
-        <button type='submit' class='btn btn-primary' style="width: 80%;">次へ</button>
+        <button type='submit' class='btn btn-primary' style="width: 80%;">リセット</button>
     </div>
 </form>
 

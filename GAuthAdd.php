@@ -45,7 +45,10 @@ EOF;
     <form action="Process/GCheck.php" method="POST" enctype="multipart/form-data">
         <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;' value='{$email}' disabled>
         <input type='text' name='username' class="form-control" placeholder='ユーザー名' style='margin-bottom: 3%;' value='{$username}' disabled>
-        <input type='password' name='password1' class="form-control" placeholder='パスワード' style='margin-bottom: 3%;'>
+        <div class="mb-3">
+            <input type='password' name='password1' class="form-control" placeholder='パスワード'>
+            <div id="emailHelp" class="form-text">パスワードは8字以上16字以下で、「?、!、#、,」のいずれかの記号が入っている必要があります。</div>
+        </div>
         <input type='password' name='password2' class="form-control" placeholder='パスワード(確認用)' style='margin-bottom: 3%;'>
         <p>プロフィール画像</p>
         <input type="file" name="UserPict" id="UserImage">
@@ -60,10 +63,6 @@ EOF;
     </form>
 
     EOF;
-
-    $GAuthButton = '';
-
-    $option = '';
 
     // JavaScriptファイルを指定
     $scriptTo = 'JavaScript/Register.js';
