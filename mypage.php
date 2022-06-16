@@ -60,11 +60,32 @@ if($result){
                             </a>
                             <a href="#">
                                 <div class="selector">
+                                    <p>Googleアカウント連携</p>
+                                    <small>お使いのアカウントにGoogleアカウントでのログイン機能を追加します。</small>
+                                </div>
+                                <hr>
+                            </a>
+                            <a href="#">
+                                <div class="selector">
                                     <p>パスワードの更新</p>
                                     <small>現在のパスワードを更新します。</small>
                                 </div>
                                 <hr>
                             </a>
+                            <div style="margin-top: 10%;">
+                                <h2>操作危険範囲</h2>
+                                <hr>
+                            </div>
+                            <div style="margin-top: 10%;">
+                                <hr>
+                                <a href="#" style="color: red;">
+                                    <div class="selector">
+                                        <p>アカウントの削除</p>
+                                        <small>アカウントを削除します。</small>
+                                    </div>
+                                </a>
+                                <hr>
+                            </div>
                         </div>
                     </div>
                 </div>

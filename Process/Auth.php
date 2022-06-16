@@ -1,4 +1,7 @@
 <?php
+include dirname(__FILE__).'/../Tools/IsInGetTools.php';
+
+SessionStarter();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(isset($_POST['email']) && isset($_POST['password'])){
         include 'sql.php';
@@ -12,6 +15,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 if($data['IsTwoFactor'] == 1){
                     $_SESSION['IsAuth'] = False;
                     $_SESSION['UserId'] = $data['id'];
+                    $_SESSION['NeedTwoFactor'] = True;
                     header('Location: /AuthSample/TwoFactor/whichTwoFactor.php');
                 }else{
                     $_SESSION['IsAuth'] = True;

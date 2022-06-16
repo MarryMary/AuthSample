@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $res = $stmt->execute();
                 if ($res) {
                     include dirname(__FILE__).'/../Tools/MailSender.php';
-                    $template = file_get_contents('mainregist.html');
+                    $template = file_get_contents(dirname(__FILE__).'/../mainregist.html');
                     $template = str_replace('{{SERVICENAME}}', 'HolyLive', $template);
                     $template = str_replace('{{URL}}', 'http://localhost/AuthSample/MainRegistration.php?token='.$uuid, $template);
                     EmailSender($_POST['email'], '本登録のご案内', $template);

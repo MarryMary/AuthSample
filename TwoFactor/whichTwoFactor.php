@@ -1,11 +1,11 @@
 <?php
-include dirname(__FILE__).'/Tools/IsInGetTools.php';
-include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Tools/IsInGetTools.php';
+include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
 
 SessionStarter();
 
-if(isset($_SESSION["IsAuth"])){
-    header("Location: mypage.php");
+if(!isset($_SESSION["IsAuth"]) || isset($_SESSION["IsAuth"]) && $_SESSION["IsAuth"]){
+    header("Location: /AuthSample/mypage.php");
 }
 
 $title = 'Two-Factor Authorize';
@@ -18,11 +18,10 @@ if(array_key_exists('err', $_SESSION)){
     unset($_SESSION['err']);
 }
 
-$GAuthJS = '<script src="https://accounts.google.com/gsi/client" async defer></script>
-<div id="g_id_onload" data-client_id="345840626602-q37bp5di0lrr53n3bar423uhg90rff67.apps.googleusercontent.com" data-callback="AuthorizeStart"></div>
-<link rel="stylesheet" href="/AuthSample/CSS/style.css">';
+$GAuthJS = '<link rel="stylesheet" href="/AuthSample/CSS/style.css">';
 
 $form = <<<EOF
+<div class="menu">
 <a href="/AuthSample/TwoFactor/GoogleAuthenticator.php">
 <div class="selector">
     <p>Google Authenticator</p>
@@ -37,7 +36,7 @@ $form = <<<EOF
 </div>
 <hr>
 </a>
-
+</div>
 EOF;
 
 $GAuthButton = '';
@@ -48,4 +47,4 @@ $option = '';
 $scriptTo = 'JavaScript/Login.js';
 $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
-include dirname(__FILE__).'/Template/BaseTemplate.php';
+include dirname(__FILE__).'/../Template/BaseTemplate.php';

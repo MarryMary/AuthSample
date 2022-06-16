@@ -1,6 +1,9 @@
 <?php
 require dirname(__FILE__).'/../vendor/autoload.php';
+require dirname(__FILE__).'/../Tools/IsInGetTools.php';
+require dirname(__FILE__).'/../Process/sql.php';
 
+SessionStarter();
 if(!isset($_SESSION["IsAuth"]) || !isset($_SESSION["NeedTwoFactor"]) || isset($_SESSION["IsAuth"]) && is_bool($_SESSION["IsAuth"]) && $_SESSION["IsAuth"]){
     header("location: /AuthSample/mypage.php");
 }
@@ -24,10 +27,10 @@ if(!$res){
         if($checkResult){
             $_SESSION["IsAuth"] = True;
             unset($_SESSION["2Factor-Token"]);
-            header("Location: /SampleAuth/mypage.php");
+            header("Location: /AuthSample/mypage.php");
         }else{
             $_SESSION["err"] = "コードが異なります。";
-            header("Location: /SampleAuth/TwoFactor/GoogleAuthenticator.php");
+            header("Location: /AuthSample/TwoFactor/GoogleAuthenticator.php");
         }
     }
 }

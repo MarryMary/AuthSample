@@ -4,8 +4,10 @@ include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
 SessionStarter();
 
-if(isset($_SESSION["IsAuth"])){
+if(isset($_SESSION["IsAuth"]) && $_SESSION["IsAuth"]){
     header("Location: mypage.php");
+}elseif(isset($_SESSION["IsAuth"]) && !$_SESSION["IsAuth"]){
+    header("Location: TwoFactor/whichTwoFactor.php");
 }
 
 $title = 'Login';
