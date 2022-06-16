@@ -1,32 +1,46 @@
 <?php
+/*
+ * 2段階認証設定画面
+ */
+// 必要ファイルのインクルード
 include 'Tools/IsInGetTools.php';
 include 'vendor/autoload.php';
+include 'Process/sql.php';
 
-use Endroid\QrCode\QrCode;
-
+// セッション開始
 SessionStarter();
+
+// もしもログインしていないか2段階認証未実施の場合はログイン画面に遷移
 if(!isset($_SESSION['IsAuth']) || is_bool($_SESSION['IsAuth']) && !$_SESSION['IsAuth']){
     header('Location: login.php');
 }
 
-include 'Process/sql.php';
+// ユーザー情報検索
 $stmt = $pdo->prepare("SELECT * FROM User WHERE id = :id");
 $stmt->bindValue(":id", $_SESSION["UserId"], PDO::PARAM_STR);
 $result = $stmt->execute();
+//もしユーザー情報があれば取得
 if($result){
     $get = $stmt->fetch();
 }else{
+    // なければマイページに遷移
     header("Location: mypage.php");
 }
 
+
+// GoogleAuthenticatorクラスをインスタンス化
 $ga = new PHPGangsta_GoogleAuthenticator();
 
+// 2段階認証が有効な状態である場合（=2段階認証のシークレットキーも存在する）
 if($get['IsTwoFactor'] == 1){
+    // シークレットキー取得
     $secret = $get['TwoFactorSecret'];
 }else{
+    // シークレットキーがない場合、空文字
     $secret = '';
 }
 
+// QRコードを生成
 $qrCodeUrl = $ga->getQRCodeGoogleUrl($get['user_name'], $secret, 'HolyLive');
 ?>
 <!DOCTYPE html>
@@ -64,6 +78,7 @@ $qrCodeUrl = $ga->getQRCodeGoogleUrl($get['user_name'], $secret, 'HolyLive');
                             <p>お使いのアカウントに2段階認証を追加します。</p>
                             <hr>
                             <?php
+                                // 2段階認証未設定の場合
                                 if($get['IsTwoFactor'] == 0):
                             ?>
                                 <p>
@@ -84,6 +99,7 @@ $qrCodeUrl = $ga->getQRCodeGoogleUrl($get['user_name'], $secret, 'HolyLive');
                                     <button type="button" class="btn btn-primary" style="width: 40%;margin-top: 10px;" onclick="location.href='mypage.php'">キャンセル</button>
                                     <button type="button" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;" onclick="location.href='TwoFactor/ActivateTwoFactor.php'">メールアドレスを確認</button>
                             <?php
+                                // 2段階認証が設定されている場合
                                 else:
                             ?>
                             <div style="text-align: center">

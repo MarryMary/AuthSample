@@ -1,9 +1,17 @@
 <?php
+/*
+ * 新規登録完了画面
+ */
+// 必要ファイルのインクルード
 include 'Tools/IsInGetTools.php';
-include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
+include 'Tools/ValidateAndSecure.php';
 
+// セッション開始
 SessionStarter();
+
+// 登録完了フラグがセッションに存在する場合
 if(isset($_SESSION["registration"])){
+    // セッション解除処理（ログアウト）
     $_SESSION = array();
     if( ini_get( 'session.use_cookies' ) )
     {
@@ -11,11 +19,12 @@ if(isset($_SESSION["registration"])){
         setcookie( session_name(), '', time() - 3600, $params[ 'path' ] );
     }
     session_destroy();
+
     $title = 'Registration';
     $card_name = '新規登録';
-    $message = '';
     $errtype = False;
 
+    // フォーム作成
     $form = <<<EOF
 <p>登録が完了致しました。<br>
 引き続きサービスを利用するにはログインして下さい。
@@ -25,12 +34,9 @@ if(isset($_SESSION["registration"])){
 </div>
 EOF;
 
-    $option = '';
-
-
-    $scriptTo = 'JavaScript/Login.js';
-
+    // テンプレートファイル読み込み
     include dirname(__FILE__).'/Template/BaseTemplate.php';
 }else{
+    // 登録完了時ではない場合
     header('Location: /AuthSample/login.php');
 }

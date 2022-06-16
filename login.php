@@ -1,11 +1,19 @@
 <?php
+/*
+ * ログイン画面本体
+ */
+
+// 必要ファイルのインクルード
 include dirname(__FILE__).'/Tools/IsInGetTools.php';
 include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
+// セッション開始
 SessionStarter();
 
+// ログイン状態の場合はmypage.phpへ推移
 if(isset($_SESSION["IsAuth"]) && $_SESSION["IsAuth"]){
     header("Location: mypage.php");
+//ログインはしているがIsAuthがFalse(2段階認証未実施)の場合はwhichTwoFactor.phpに遷移
 }elseif(isset($_SESSION["IsAuth"]) && !$_SESSION["IsAuth"]){
     header("Location: TwoFactor/whichTwoFactor.php");
 }
@@ -20,8 +28,10 @@ if(array_key_exists('err', $_SESSION)){
     unset($_SESSION['err']);
 }
 
+// Googleシングル・サインオン用のJavaScriptを読み込み
 $GAuthJS = '<script src="https://accounts.google.com/gsi/client" async defer></script><div id="g_id_onload" data-client_id="345840626602-q37bp5di0lrr53n3bar423uhg90rff67.apps.googleusercontent.com" data-callback="AuthorizeStart"></div>';
 
+// フォーム作成
 $form = <<<EOF
 <form action="Process/Auth.php" method="POST">
     <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;'>
@@ -37,6 +47,7 @@ $form = <<<EOF
 
 EOF;
 
+//Googleでログインボタンを作成
 $GAuthButton = <<<EOF
 <br>
 <div class="g_id_signin"
@@ -49,13 +60,16 @@ $GAuthButton = <<<EOF
 </div>
 EOF;
 
+// オプションメニュー作成
 $option = <<<EOF
 <p>アカウントをお持ちではありませんか？<a href="register_pre.php">新規登録</a></p>
 <p>パスワードをお忘れですか？<a href="#">パスワードのリセット</a></p>
 EOF;
 
 
+//JavaScript指定
 $scriptTo = 'JavaScript/Login.js';
 $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
+// テンプレートファイルをインクルード
 include dirname(__FILE__).'/Template/BaseTemplate.php';

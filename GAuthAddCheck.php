@@ -1,8 +1,15 @@
 <?php
+/*
+ * Google シングル・サインオンで新規登録を行った場合の最終確認（この内容で登録するか確認する）画面
+ */
+
+// 必要モジュールのインクルード
 include dirname(__FILE__).'/Tools/IsInGetTools.php';
 include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
+// セッション開始
 SessionStarter();
+// もしセッションにemailとuseridが入っている場合
 if(isset($_SESSION['email']) && isset($_SESSION['userid'])){
     $title = 'Registration';
     $card_name = '新規登録';
@@ -18,13 +25,11 @@ if(isset($_SESSION['email']) && isset($_SESSION['userid'])){
 
     $email = $_SESSION['email'];
     $username = $_SESSION['username'];
+
+    //パスワードは文字数分黒丸を表示する(html編集対策)
     $password = str_repeat("●", strlen($_SESSION['password']));
 
-    $GAuthJS = <<<EOF
-    <link href="//cdnjs.cloudflare.com/ajax/libs/cropper/3.1.6/cropper.min.css" rel="stylesheet">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/cropper/3.1.6/cropper.min.js"></script>
-    EOF;
-
+    //form作成
     $form = <<<EOF
     <form action="Process/GAuthAdd.php" method="POST" enctype="multipart/form-data">
         <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;' value='{$email}' disabled>
@@ -42,15 +47,12 @@ if(isset($_SESSION['email']) && isset($_SESSION['userid'])){
 
     EOF;
 
-    $GAuthButton = '';
-
-    $option = '';
-
-
+    // JavaScript指定
     $scriptTo = 'JavaScript/Register.js';
-    $JS = '';
 
+    // テンプレートファイル読み込み
     include dirname(__FILE__).'/Template/BaseTemplate.php';
 }else{
+    // 条件に一致しない場合はログイン画面に遷移
     header('Location: /AuthSample/login.php');
 }

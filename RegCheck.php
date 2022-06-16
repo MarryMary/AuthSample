@@ -1,9 +1,16 @@
 <?php
+/*
+ * 通常登録時の最終確認画面
+ */
+// 必要ファイルのインクルード
 include dirname(__FILE__).'/Tools/IsInGetTools.php';
 include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
+// セッション開始
 SessionStarter();
-if(isset($_SESSION['email']) && isset($_SESSION['username']) && isset($_SESSION['username'])){
+
+// email、usernameがセッションにある場合
+if(isset($_SESSION['email']) && isset($_SESSION['username'])){
     $title = 'Registration';
     $card_name = '新規登録';
     $message = '以下の内容で登録します。';
@@ -20,11 +27,7 @@ if(isset($_SESSION['email']) && isset($_SESSION['username']) && isset($_SESSION[
     $username = $_SESSION['username'];
     $password = str_repeat("●", strlen($_SESSION['password']));
 
-    $GAuthJS = <<<EOF
-    <link href="//cdnjs.cloudflare.com/ajax/libs/cropper/3.1.6/cropper.min.css" rel="stylesheet">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/cropper/3.1.6/cropper.min.js"></script>
-    EOF;
-
+    // フォーム作成
     $form = <<<EOF
     <form action="Process/Registration.php" method="POST" enctype="multipart/form-data">
         <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;' value='{$email}' disabled>
@@ -42,15 +45,7 @@ if(isset($_SESSION['email']) && isset($_SESSION['username']) && isset($_SESSION[
 
     EOF;
 
-    $GAuthButton = '';
-
-    $option = '';
-
-
-    $scriptTo = 'JavaScript/Register.js';
-    $JS = '<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cropper/1.0.1/jquery-cropper.js" type="text/javascript"></script>';
-
+    // テンプレートファイル読み込み
     include dirname(__FILE__).'/Template/BaseTemplate.php';
 }else{
     header('Location: /AuthSample/login.php');

@@ -1,7 +1,12 @@
 <?php
+/*
+ * 新規登録(仮新規登録)画面
+ */
+// 必要ファイルのインクルード
 include dirname(__FILE__).'/Tools/IsInGetTools.php';
 include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
+// セッション開始
 SessionStarter();
 
 $title = 'Registration';
@@ -14,6 +19,7 @@ if(isset($_SESSION["err"])){
     unset($_SESSION['err']);
 }
 
+//フォーム作成
 $form = <<<EOF
 <form action="Process/PreRegist.php" method="POST">
     <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;'>
@@ -25,12 +31,11 @@ $form = <<<EOF
 
 EOF;
 
+// オプションメニュー表示
 $option = <<<EOF
 <p>アカウントをお持ちですか？<a href="login.php">ログイン</a></p>
 <p>パスワードをお忘れですか？<a href="#">パスワードのリセット</a></p>
 EOF;
 
-
-$scriptTo = 'JavaScript/Login.js';
-
+//テンプレートファイルの読み込み
 include dirname(__FILE__).'/Template/BaseTemplate.php';

@@ -15,14 +15,14 @@
         <div class="mx-auto" style="width:50%;">
             <div class="card">
                 <h1><?= h($card_name) ?></h1>
-                <p style="color: <?= $errtype ? 'red' : 'black' ?>;" id="message"><?= h($message) ?></p>
+                <p style="color: <?= $errtype ? 'red' : 'black' ?>;" id="message"><?= isset($message) ? h($message) : '' ?></p>
                 <hr>
                 <?= $form ?>
                 <div style="margin: auto;">
                     <?=isset($GAuthButton) ? $GAuthButton : '' ?>
                 </div>
                 <div style="margin-top: 5%;">
-                    <?= $option ?>
+                    <?= isset($option) ? $option : ''?>
                 </div>
             </div>
         </div>
