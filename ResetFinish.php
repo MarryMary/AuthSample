@@ -3,22 +3,16 @@
  * 新規登録完了画面
  */
 // 必要ファイルのインクルード
-include 'Tools/IsInGetTools.php';
+include 'Tools/Session.php';
 include 'Tools/ValidateAndSecure.php';
 
 // セッション開始
 SessionStarter();
 
 // 登録完了フラグがセッションに存在する場合
-if(isset($_SESSION["registration"])){
+if(SessionIsIn('registration')){
     // セッション解除処理（ログアウト）
-    $_SESSION = array();
-    if( ini_get( 'session.use_cookies' ) )
-    {
-        $params = session_get_cookie_params();
-        setcookie( session_name(), '', time() - 3600, $params[ 'path' ] );
-    }
-    session_destroy();
+    SessionUnset();
 
     $title = 'Forget';
     $card_name = 'パスワードのリセット';

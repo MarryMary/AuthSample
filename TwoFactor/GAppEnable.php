@@ -1,23 +1,36 @@
 <?php
-require dirname(__FILE__).'/../vendor/autoload.php';
-require dirname(__FILE__).'/../Tools/IsInGetTools.php';
+/*
+ * 2段階認証の設定完了画面に遷移するためのファイル
+ */
+// 必要ファイルのインクルード
+include dirname(__FILE__).'/../vendor/autoload.php';
+include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
-require dirname(__FILE__).'/../Process/sql.php';
+include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
+// セッション開始
 SessionStarter();
-if(!isset($_SESSION["IsAuth"]) || isset($_SESSION["IsAuth"]) && is_bool($_SESSION["IsAuth"]) && !$_SESSION["IsAuth"]){
-    header("location: /AuthSample/mypage.php");
+
+
+// ログイン状態でない場合
+if(!SessionIsIn('IsAuth') || SessionIsIn('IsAuth') && is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
+    header("location: /$SERVICE_ROOT/mypage.php");
 }
 
+// ユーザーテーブルをidから検索
+$userid = SessionReader('UserId');
 $stmt = $pdo->prepare("SELECT * FROM User WHERE id = :id");
-$stmt->bindValue(":id", $_SESSION["UserId"], PDO::PARAM_INT);
+$stmt->bindValue(":id", $userid, PDO::PARAM_INT);
 $res = $stmt->execute();
+
+// SQLが正しく実行できなかった場合
 if(!$res){
-    header("Location: /AuthSample/Process/Logout.php");
+    header("Location: /$SERVICE_ROOT/Process/Logout.php");
 }else{
     $data = $stmt->fetch();
     if(is_bool($data)){
-        header("Location: /AuthSample/Process/Logout.php");
+        header("Location: /$SERVICE_ROOT/Process/Logout.php");
     }else{
         $ga = new PHPGangsta_GoogleAuthenticator();
         $secret = $data["TwoFactorSecret"];

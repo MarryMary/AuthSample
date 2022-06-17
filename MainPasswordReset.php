@@ -3,9 +3,9 @@
  * 新規登録の本登録（メールアドレスの有効性が確認できた場合）
  */
 // 必要ファイルのインクルード
-include 'Tools/IsInGetTools.php';
+include 'Tools/Session.php';
 include 'Tools/ValidateAndSecure.php';
-include 'Process/sql.php';
+include 'Tools/SQL.php';
 
 // セッション開始
 SessionStarter();
@@ -28,8 +28,8 @@ if(isset($_GET["token"])){
         //取得できた場合（条件一致が0件の場合はFalseになる）
         if(!is_bool($result)){
             // セッションにトークン情報とメールアドレスを代入
-            $_SESSION['token'] = $_GET["token"];
-            $_SESSION['email'] = $result['email'];
+            SessionInsert('token', $_GET['token']);
+            SessionInsert('email', $result['email']);
             // email変数にemail情報を代入
             $email = $result['email'];
 
@@ -38,10 +38,10 @@ if(isset($_GET["token"])){
             $card_name = 'パスワードのリセット';
             $message = 'パスワードのリセットを行うには以下の情報を追加して下さい。';
             $errtype = False;
-            if(array_key_exists('err', $_SESSION)){
+            if(SessionIsIn('err')){
                 $errtype = True;
-                $message = $_SESSION['err'];
-                unset($_SESSION['err']);
+                $message = SessionReader('err');
+                SessionUnset('err');
             }
 
             // フォーム作成

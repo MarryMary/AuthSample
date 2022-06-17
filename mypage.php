@@ -3,20 +3,21 @@
  * マイページ（仮、ログイン後）
  */
 // 必要ファイルのインクルード
-include 'Tools/IsInGetTools.php';
-include 'Process/sql.php';
+include 'Tools/Session.php';
+include 'Tools/SQL.php';
 
 //セッション開始
 SessionStarter();
 
 // ログインしていない、または2段階認証未実施の場合
-if(!isset($_SESSION['IsAuth']) || is_bool($_SESSION['IsAuth']) && !$_SESSION['IsAuth']){
+if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
     header('Location: login.php');
 }
 
 // ユーザー情報を検索(IsAuthがセッションにあってUserIdがセッションにない状況はありえない(ログイン時・ログアウト時にのみこれらの値が変更される))
+$userid = SessionReader('UserId');
 $stmt = $pdo->prepare("SELECT * FROM User WHERE id = :id");
-$stmt->bindValue(":id", $_SESSION["UserId"], PDO::PARAM_STR);
+$stmt->bindValue(":id", $userid, PDO::PARAM_STR);
 $result = $stmt->execute();
 
 // SQLが実行できた場合

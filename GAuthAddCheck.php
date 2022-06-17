@@ -4,7 +4,7 @@
  */
 
 // 必要モジュールのインクルード
-include dirname(__FILE__).'/Tools/IsInGetTools.php';
+include dirname(__FILE__).'/Tools/Session.php';
 include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
 // セッション開始
@@ -15,19 +15,19 @@ if(isset($_SESSION['email']) && isset($_SESSION['userid'])){
     $card_name = '新規登録';
     $message = '以下の内容で登録します。';
     $errtype = False;
-    if(array_key_exists('err', $_SESSION)){
+    if(SessionIsIn('err')){
         $errtype = True;
-        $message = $_SESSION['err'];
-        unset($_SESSION['err']);
+        $message = SessionReader('err');
+        SessionUnset('err');
     }
 
-    $file = $_SESSION['filename'];
+    $file = SessionReader('filename');
 
-    $email = $_SESSION['email'];
-    $username = $_SESSION['username'];
+    $email = SessionReader('email');
+    $username = SessionReader('username');
 
     //パスワードは文字数分黒丸を表示する(html編集対策)
-    $password = str_repeat("●", strlen($_SESSION['password']));
+    $password = str_repeat("●", strlen(SessionReader('password')));
 
     //form作成
     $form = <<<EOF

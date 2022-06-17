@@ -3,22 +3,25 @@
  * 2段階認証設定画面
  */
 // 必要ファイルのインクルード
-include 'Tools/IsInGetTools.php';
+include 'Tools/Session.php';
 include 'vendor/autoload.php';
-include 'Process/sql.php';
+include 'Tools/SQL.php';
+include 'Template/ServiceData.php';
 
 // セッション開始
 SessionStarter();
 
 // もしもログインしていないか2段階認証未実施の場合はログイン画面に遷移
-if(!isset($_SESSION['IsAuth']) || is_bool($_SESSION['IsAuth']) && !$_SESSION['IsAuth']){
+if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
     header('Location: login.php');
 }
 
 // ユーザー情報検索
+$userid = SessionReader('UserId');
 $stmt = $pdo->prepare("SELECT * FROM User WHERE id = :id");
-$stmt->bindValue(":id", $_SESSION["UserId"], PDO::PARAM_STR);
+$stmt->bindValue(":id", $userid, PDO::PARAM_STR);
 $result = $stmt->execute();
+
 //もしユーザー情報があれば取得
 if($result){
     $get = $stmt->fetch();
@@ -41,7 +44,7 @@ if($get['IsTwoFactor'] == 1){
 }
 
 // QRコードを生成
-$qrCodeUrl = $ga->getQRCodeGoogleUrl($get['user_name'], $secret, 'HolyLive');
+$qrCodeUrl = $ga->getQRCodeGoogleUrl($get['user_name'], $secret, $SERVICE_NAME);
 ?>
 <!DOCTYPE html>
 <html lang='ja'>

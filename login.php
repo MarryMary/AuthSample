@@ -4,17 +4,17 @@
  */
 
 // 必要ファイルのインクルード
-include dirname(__FILE__).'/Tools/IsInGetTools.php';
+include dirname(__FILE__).'/Tools/Session.php';
 include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
 // セッション開始
 SessionStarter();
 
 // ログイン状態の場合はmypage.phpへ推移
-if(isset($_SESSION["IsAuth"]) && $_SESSION["IsAuth"]){
+if(SessionIsIn('IsAuth') && SessionReader('IsAuth')){
     header("Location: mypage.php");
 //ログインはしているがIsAuthがFalse(2段階認証未実施)の場合はwhichTwoFactor.phpに遷移
-}elseif(isset($_SESSION["IsAuth"]) && !$_SESSION["IsAuth"]){
+}elseif(SessionIsIn('IsAuth') && !SessionReader('IsAuth')){
     header("Location: TwoFactor/whichTwoFactor.php");
 }
 
@@ -22,10 +22,10 @@ $title = 'Login';
 $card_name = 'ログイン';
 $message = '続行するにはログインしてください。';
 $errtype = False;
-if(array_key_exists('err', $_SESSION)){
+if(SessionIsIn('err')){
     $errtype = True;
-    $message = $_SESSION['err'];
-    unset($_SESSION['err']);
+    $message = SessionReader('err');
+    SessionUnset('err');
 }
 
 // Googleシングル・サインオン用のJavaScriptを読み込み

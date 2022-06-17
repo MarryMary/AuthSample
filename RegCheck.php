@@ -3,29 +3,29 @@
  * 通常登録時の最終確認画面
  */
 // 必要ファイルのインクルード
-include dirname(__FILE__).'/Tools/IsInGetTools.php';
-include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
+include 'Tools/Session.php';
+include 'Tools/ValidateAndSecure.php';
 
 // セッション開始
 SessionStarter();
 
 // email、usernameがセッションにある場合
-if(isset($_SESSION['email']) && isset($_SESSION['username'])){
+if(SessionIsIn('email') && SessionIsIn('username')){
     $title = 'Registration';
     $card_name = '新規登録';
     $message = '以下の内容で登録します。';
     $errtype = False;
-    if(array_key_exists('err', $_SESSION)){
+    if(SessionIsIn('err')){
         $errtype = True;
-        $message = $_SESSION['err'];
-        unset($_SESSION['err']);
+        $message = SessionReader('err');
+        SessionUnset('err');
     }
 
-    $file = $_SESSION['filename'];
+    $file = SessionReader('filename');
 
-    $email = $_SESSION['email'];
-    $username = $_SESSION['username'];
-    $password = str_repeat("●", strlen($_SESSION['password']));
+    $email = SessionReader('email');
+    $username = SessionReader('username');
+    $password = str_repeat("●", strlen(SessionReader('password')));
 
     // フォーム作成
     $form = <<<EOF

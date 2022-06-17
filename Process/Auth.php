@@ -5,7 +5,7 @@
 
 //必要ファイルのインクルード
 include dirname(__FILE__).'/../Tools/Session.php';
-include 'sql.php';
+include dirname(__FILE__).'/../Tools/SQL.php';
 
 //セッション開始
 SessionStarter();
@@ -44,19 +44,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     header('Location: /AuthSample/mypage.php');
                 }
             }else{
+                // ユーザー情報が見つからなかった場合
                 SessionInsert('err', 'メールアドレスまたはパスワードが間違っています。');
                 header('Location: /AuthSample/login.php');
             }
         }else{
+            // SQLが正しく実行できなかった場合
             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
             header('Location: /AuthSample/login.php');
         }
         // PDO接続解除
         $pdo = null;
     }else{
+        // メールアドレスまたはパスワードが入力されていなかった場合
         SessionInsert('err', 'メールアドレスまたはパスワードが入力されていません。');
         header('Location: /AuthSample/login.php');
     }
 }else{
+    // POST送信でなかった場合
     header('Location: /AuthSample/login.php');
 }

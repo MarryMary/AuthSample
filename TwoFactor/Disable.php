@@ -1,18 +1,30 @@
 <?php
-include dirname(__FILE__).'/../Tools/IsInGetTools.php';
+/*
+ * 2段階認証を無効化するか確認するための画面
+ */
+// 必要ファイルのインクルード
+include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../vendor/autoload.php';
-include dirname(__FILE__).'/../Process/sql.php';
+include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
+// セッション開始
 SessionStarter();
-if(!isset($_SESSION['IsAuth']) || is_bool($_SESSION['IsAuth']) && !$_SESSION['IsAuth']){
+
+// ログイン状態でない場合
+if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
     header('Location: login.php');
 }
 
+// ユーザー情報の取得
+$userid = SessionReader('UserId');
 $stmt = $pdo->prepare("SELECT * FROM User WHERE id = :id");
-$stmt->bindValue(":id", $_SESSION["UserId"], PDO::PARAM_STR);
+$stmt->bindValue(":id", $userid, PDO::PARAM_STR);
 $result = $stmt->execute();
+// SQLが正しく実行できた場合
 if($result){
     $get = $stmt->fetch();
+//SQLが正しく実行できなかった場合
 }else{
     header("Location: mypage.php");
 }
@@ -50,6 +62,7 @@ if($result){
                         <p>お使いのアカウントから2段階認証を無効化します。</p>
                         <hr>
                         <?php
+                        // 2段階認証が有効であれば
                         if($get['IsTwoFactor'] == 1):
                             ?>
                             <p>
@@ -61,8 +74,9 @@ if($result){
                             <button type="button" class="btn btn-primary" style="width: 40%;margin-top: 10px;" onclick="location.href='/AuthSample/mypage.php'">キャンセル</button>
                             <button type="button" class="btn btn-danger" style="width: 40%;margin-top: 10px; margin-left: 10px;" onclick="location.href='StartDisable.php'">無効化</button>
                         <?php
+                            // 2段階認証が無効であれば
                             else:
-                                header("Location: /AuthSample/mypage.php");
+                                header("Location: /$SERVICE_ROOT/mypage.php");
                             endif;
                         ?>
                     </div>

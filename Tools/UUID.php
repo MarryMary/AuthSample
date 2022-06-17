@@ -1,4 +1,8 @@
 <?php
+/*
+ * 衝突しないUUID V4を生成します。
+ */
+
 $pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
 $chars = str_split($pattern);
 

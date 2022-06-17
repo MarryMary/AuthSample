@@ -3,15 +3,15 @@
  * 2段階認証設定画面
  */
 // 必要ファイルのインクルード
-include 'Tools/IsInGetTools.php';
+include 'Tools/Session.php';
 include 'vendor/autoload.php';
-include 'Process/sql.php';
+include 'Tools/SQL.php';
 
 // セッション開始
 SessionStarter();
 
 // もしもログインしていないか2段階認証未実施の場合はログイン画面に遷移
-if(!isset($_SESSION['IsAuth']) || is_bool($_SESSION['IsAuth']) && !$_SESSION['IsAuth']){
+if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
     header('Location: login.php');
 }
 
@@ -26,22 +26,6 @@ if($result){
     // なければマイページに遷移
     header("Location: mypage.php");
 }
-
-
-// GoogleAuthenticatorクラスをインスタンス化
-$ga = new PHPGangsta_GoogleAuthenticator();
-
-// 2段階認証が有効な状態である場合（=2段階認証のシークレットキーも存在する）
-if($get['IsTwoFactor'] == 1){
-    // シークレットキー取得
-    $secret = $get['TwoFactorSecret'];
-}else{
-    // シークレットキーがない場合、空文字
-    $secret = '';
-}
-
-// QRコードを生成
-$qrCodeUrl = $ga->getQRCodeGoogleUrl($get['user_name'], $secret, 'HolyLive');
 ?>
 <!DOCTYPE html>
 <html lang='ja'>

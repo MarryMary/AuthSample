@@ -3,7 +3,7 @@
  * 新規登録(仮新規登録)画面
  */
 // 必要ファイルのインクルード
-include dirname(__FILE__).'/Tools/IsInGetTools.php';
+include dirname(__FILE__).'/Tools/Session.php';
 include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
 // セッション開始
@@ -13,10 +13,10 @@ $title = 'Forget';
 $card_name = 'パスワードのリセット';
 $message = 'パスワードをリセットするにはアカウントのメールアドレスを入力して下さい。';
 $errtype = False;
-if(isset($_SESSION["err"])){
+if(SessionIsIn('err')){
     $errtype = True;
-    $message = $_SESSION['err'];
-    unset($_SESSION['err']);
+    $message = SessionReader('err');
+    SessionUnset('err');
 }
 
 //フォーム作成

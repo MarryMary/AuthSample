@@ -3,8 +3,8 @@
  * 新規登録(仮新規登録)画面
  */
 // 必要ファイルのインクルード
-include dirname(__FILE__).'/Tools/IsInGetTools.php';
-include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
+include 'Tools/Session.php';
+include 'Tools/ValidateAndSecure.php';
 
 // セッション開始
 SessionStarter();
@@ -13,10 +13,10 @@ $title = 'Registration';
 $card_name = '新規登録';
 $message = '続行するにはメールアドレスを入力して下さい。';
 $errtype = False;
-if(isset($_SESSION["err"])){
+if(SessionIsIn('err')){
     $errtype = True;
-    $message = $_SESSION['err'];
-    unset($_SESSION['err']);
+    $message = SessionReader('err');
+    SessionUnset('err');
 }
 
 //フォーム作成

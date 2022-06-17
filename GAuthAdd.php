@@ -4,14 +4,14 @@
  */
 
 //必要ファイルのインクルード
-include dirname(__FILE__).'/Tools/IsInGetTools.php';
+include dirname(__FILE__).'/Tools/Session.php';
 include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 
 // セッション開始(IsInGetTools.php内関数)
 SessionStarter();
 
 //セッションにemail、userid、user名が入っている場合の処理
-if(isset($_SESSION['email']) && isset($_SESSION['userid']) && isset($_SESSION['username'])){
+if(SessionIsIn('email') && SessionIsIn('userid') && SessionIsIn('username')){
     // ページのタイトル
     $title = 'Registration';
     // ログインのカード（白い部分）の一番上に表示するタイトル
@@ -21,19 +21,19 @@ if(isset($_SESSION['email']) && isset($_SESSION['userid']) && isset($_SESSION['u
     // エラーがあるかどうか
     $errtype = False;
     // もしセッションにエラーが入っている場合は
-    if(isset($_SESSION["err"])){
+    if(SessionIsIn('err')){
         // エラーがある
         $errtype = True;
         // エラー内容
-        $message = $_SESSION['err'];
+        $message = SessionReader('err');
         // エラー削除
-        unset($_SESSION['err']);
+        SessionUnset('err');
     }
 
     // メール（GMail）
-    $email = $_SESSION['email'];
+    $email = SessionReader('email');
     //ユーザー名(Google)
-    $username = $_SESSION['username'];
+    $username = SessionReader('username');
 
     //cropper.js用のCSSを読み込み
     $GAuthJS = <<<EOF
