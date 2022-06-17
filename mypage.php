@@ -61,17 +61,31 @@ if($result){
                         <div style="text-align: center">
                             <h1>マイメニュー</h1>
                             <hr>
-                            <a href="TwoFactorAuthorize.php">
+                            <a href="mailchange.php">
                                 <div class="selector">
-                                    <p>2段階認証の設定</p>
-                                    <small>Google Authenticatorアプリを使用してログイン時に2段階認証を行えるようにします。</small>
+                                    <p>ユーザー名の変更</p>
+                                    <small>ユーザー名を変更します。</small>
+                                </div>
+                                <hr>
+                            </a>
+                            <a href="#">
+                                <div class="selector">
+                                    <p>ユーザー画像の変更</p>
+                                    <small>ユーザー画像を変更します。</small>
                                 </div>
                                 <hr>
                             </a>
                             <a href="mailchange.php">
                                 <div class="selector">
-                                    <p>メールアドレスの更新</p>
-                                    <small>現在のメールアドレスを更新します。</small>
+                                    <p>メールアドレスの変更</p>
+                                    <small>現在のメールアドレスを変更します。</small>
+                                </div>
+                                <hr>
+                            </a>
+                            <a href="#">
+                                <div class="selector">
+                                    <p>パスワードの変更</p>
+                                    <small>ログインパスワードを変更します。</small>
                                 </div>
                                 <hr>
                             </a>
@@ -82,10 +96,10 @@ if($result){
                                 </div>
                                 <hr>
                             </a>
-                            <a href="#">
+                            <a href="TwoFactorAuthorize.php">
                                 <div class="selector">
-                                    <p>パスワードの更新</p>
-                                    <small>現在のパスワードを更新します。</small>
+                                    <p>2段階認証の設定</p>
+                                    <small>Google Authenticatorアプリを使用してログイン時に2段階認証を行えるようにします。</small>
                                 </div>
                                 <hr>
                             </a>

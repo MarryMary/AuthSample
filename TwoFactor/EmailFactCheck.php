@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
 
     // 2段階認証トークンがセッションとポスト送信両方に存在し、それらが等しい場合
     if(SessionIsIn('2Factor-Token') && isset($_POST["token"]) && trim(SessionReader('2Factor-Token')) == trim($_POST["token"])){
-        SessionInsert('IsAuth');
+        SessionInsert('IsAuth', True);
         SessionUnset('2Factor-Token');
         header("Location: /AuthSample/mypage.php");
     // もしコードが送信されていないか2段階認証トークンが存在しない場合

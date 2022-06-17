@@ -16,7 +16,7 @@ function SessionStarter() :void
 // セッションを読み取る関数
 function SessionReader($key)
 {
-    return $_SESSION[$key];
+    return isset($_SESSION[$key]) ? $_SESSION[$key] : '';
 }
 
 // セッションの存在を確認する関数
