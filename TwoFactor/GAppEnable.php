@@ -27,31 +27,45 @@ $res = $stmt->execute();
 // SQLが正しく実行できなかった場合
 if(!$res){
     header("Location: /$SERVICE_ROOT/Process/Logout.php");
+// SQLが正しく実行できた場合
 }else{
+    // データ取得
     $data = $stmt->fetch();
+    
+    // データが存在しなかった場合
     if(is_bool($data)){
         header("Location: /$SERVICE_ROOT/Process/Logout.php");
+    // データが存在する場合
     }else{
+        // Google Authenticatorインスタンスを生成
         $ga = new PHPGangsta_GoogleAuthenticator();
+        // 2段階認証のトークンを取得
         $secret = $data["TwoFactorSecret"];
+        // ユーザーが送信したトークンを取得
         $code = filter_input(INPUT_POST, 'token');
+        // 30sec * 2( = 1min)、サーバーとクライアントの時間のズレを許容する
         $discrepancy = 2;
+
+        // コードを検証
         $checkResult = $ga->verifyCode($secret, $code, $discrepancy);
+
+        // トークンが正しい場合
         if($checkResult){
+            // 仮ユーザーテーブルからデータを削除
             $stmt = $pdo->prepare("DELETE FROM PreUser WHERE user_token = :token");
             $stmt->bindValue(":token", $_SESSION["token"], PDO::PARAM_STR);
             $result = $stmt->execute();
+
+
             $title = 'Google Authenticator Enabled';
             $card_name = '設定完了';
             $message = '全ての設定が完了しました！';
             $errtype = False;
-            if(array_key_exists('err', $_SESSION)){
+            if(SessionIsIn('err')){
                 $errtype = True;
-                $message = $_SESSION['err'];
-                unset($_SESSION['err']);
+                $message = SessionReader('err');
+                SessionUnset('err');
             }
-
-            $GAuthJS = '';
 
             $form = <<<EOF
 <p>
@@ -61,15 +75,12 @@ if(!$res){
 </p>
 EOF;
 
-            $GAuthButton = '';
-            $option = '';
-
             $scriptTo = 'JavaScript/Login.js';
             $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
             include dirname(__FILE__).'/../Template/BaseTemplate.php';
         }else{
-            $_SESSION["err"] = "コードが異なります。";
+            SessionInsert('err', 'コードが異なります');
             header("Location: /AuthSample/TwoFactor/EnableTwoFactor.php?token=".$_SESSION["token"]);
         }
     }

@@ -1,26 +1,32 @@
 <?php
-include dirname(__FILE__).'/../Tools/IsInGetTools.php';
+/*
+* Google Authenticatorを使用したログインページ
+*/
+// 必要ファイルのインクルード
+include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
 include dirname(__FILE__).'/../Tools/MailSender.php';
-include dirname(__FILE__).'/../Process/sql.php';
+include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
-
+// セッション開始
 SessionStarter();
 
-if(!isset($_SESSION["IsAuth"]) || !isset($_SESSION["NeedTwoFactor"]) || isset($_SESSION["IsAuth"]) && is_bool($_SESSION["IsAuth"]) && $_SESSION["IsAuth"]){
-    header("location: /AuthSample/mypage.php");
+// ログイン状態であるか、ログインしていない場合
+if(!SessionIsIn('IsAuth') || !SessionIsIn('NeedTwoFactor') || SessionIsIn('IsAuth') && is_bool(SessionReader('IsAuth')) && Sessionreader('IsAuth')){
+    header("location: /$SERVICE_ROOT/mypage.php");
+// 2段階認証が必要な場合
 }else{
+
     $title = 'Two-Factor Authorize';
     $card_name = '2段階認証';
     $message = 'Google Authenticatorアプリに表示されている2段階認証コードを入力して下さい。';
     $errtype = False;
-    if(array_key_exists('err', $_SESSION)){
+    if(SessionIsIn('err')){
         $errtype = True;
-        $message = $_SESSION['err'];
-        unset($_SESSION['err']);
+        $message = SessionReader('err');
+        SessionUnset('err');
     }
-
-    $GAuthJS = '';
 
     $form = <<<EOF
 <form action="GAFactCheck.php" method="POST">
@@ -31,10 +37,6 @@ if(!isset($_SESSION["IsAuth"]) || !isset($_SESSION["NeedTwoFactor"]) || isset($_
 </div>
 </form>
 EOF;
-
-    $GAuthButton = '';
-
-    $option = '';
 
 
     $scriptTo = 'JavaScript/Login.js';

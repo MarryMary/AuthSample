@@ -1,22 +1,24 @@
 <?php
-include dirname(__FILE__).'/../Tools/IsInGetTools.php';
+/*
+* 2段階認証選択画面
+*/
+// 必要ファイルのインクルード
+include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
 
+//セッション開始
 SessionStarter();
 
-if(!isset($_SESSION["IsAuth"]) || isset($_SESSION["IsAuth"]) && $_SESSION["IsAuth"]){
+// ログイン状態かログインしていない場合
+if(!SessionIsIn('IsAuth') || SessionIsIn('IsAuth') && SessionReader('IsAuth')){
     header("Location: /AuthSample/mypage.php");
 }
+
 
 $title = 'Two-Factor Authorize';
 $card_name = '2段階認証';
 $message = 'どちらの方法で2段階認証を行うか選択して下さい。';
 $errtype = False;
-if(array_key_exists('err', $_SESSION)){
-    $errtype = True;
-    $message = $_SESSION['err'];
-    unset($_SESSION['err']);
-}
 
 $GAuthJS = '<link rel="stylesheet" href="/AuthSample/CSS/style.css">';
 
@@ -38,10 +40,6 @@ $form = <<<EOF
 </a>
 </div>
 EOF;
-
-$GAuthButton = '';
-
-$option = '';
 
 
 $scriptTo = 'JavaScript/Login.js';

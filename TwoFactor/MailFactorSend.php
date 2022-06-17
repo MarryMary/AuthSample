@@ -1,46 +1,59 @@
 <?php
-include dirname(__FILE__).'/../Tools/IsInGetTools.php';
+/*
+* メールでの2段階認証を選択した場合の画面
+*/
+// 必要ファイルのインクルード
+include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
 include dirname(__FILE__).'/../Tools/MailSender.php';
-include dirname(__FILE__).'/../Process/sql.php';
+include dirname(__FILE__).'/../Tools/SQL.php';
 
-
+// セッション開始
 SessionStarter();
 
-if(!isset($_SESSION["IsAuth"]) || !isset($_SESSION["NeedTwoFactor"]) || isset($_SESSION["IsAuth"]) && is_bool($_SESSION["IsAuth"]) && $_SESSION["IsAuth"]){
+// もしログインしているか、ログインしていない場合
+if(!SessionIsIn('IsAuth') || !SessionIsIn('NeedTwoFactor') || SessionIsIn('IsAuth') && is_bool(SessionReader('IsAuth')) && SessionReader('IsAuth')){
     header("location: /AuthSample/mypage.php");
 }
 
+// idを基準にデータを取得
 $stmt = $pdo->prepare("SELECT * FROM User WHERE id = :id");
 $stmt->bindValue(":id", $_SESSION["UserId"], PDO::PARAM_INT);
 $res = $stmt->execute();
+
+// SQLを正しく実行できなかった場合
 if(!$res){
     header("Location: /AuthSample/Process/Logout.php");
+// SQLを正しく実行できた場合
 }else{
+    // データ取得
     $data = $stmt->fetch();
+
+    // データが存在しなかった場合
     if(is_bool($data)){
         header("Location: /AuthSample/Process/Logout.php");
+    // データが存在する場合
     }else{
-        if(!isset($_SESSION["2Factor-Token"]) || isset($_GET["regenerate"])){
+        // 2段階認証のトークンがセッションに無いかまたは再生成が必要な場合
+        if(!SessionIsIn('2Factor-Token') || isset($_GET["regenerate"])){
             $str = 'abcdefghijklmnopqrstuvwxyz0123456789';
             $rand_str = substr(str_shuffle($str), 0, 6);
             $template = file_get_contents(dirname(__FILE__).'/../Template/CodeTemplate.html');
             $template = str_replace('{{TOKEN}}', $rand_str, $template);
-            EmailSender($data["email"], "HolyLive2段階認証コード", $template);
-            $_SESSION["2Factor-Token"] = $rand_str;
+            EmailSender($data["email"], "$SERVICE_NAME2段階認証コード", $template);
+            SessionInsert('2Factor-Token', $rand_str);
         }
 
         $title = 'Two-Factor Authorize';
         $card_name = '2段階認証';
         $message = 'アカウントに連携されているメールアドレスに送信された2段階認証コードを入力して下さい。';
         $errtype = False;
-        if(array_key_exists('err', $_SESSION)){
+        if(SessionIsIn('err')){
             $errtype = True;
-            $message = $_SESSION['err'];
-            unset($_SESSION['err']);
+            $message = SessionReader('err');
+            SessionUnset('err');
         }
 
-        $GAuthJS = '';
 
         $form = <<<EOF
 <form action="EMailFactCheck.php" method="POST">
@@ -52,11 +65,6 @@ if(!$res){
 </div>
 </form>
 EOF;
-
-        $GAuthButton = '';
-
-        $option = '';
-
 
         $scriptTo = 'JavaScript/Login.js';
         $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
