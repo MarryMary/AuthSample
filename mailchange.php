@@ -77,22 +77,14 @@ $qrCodeUrl = $ga->getQRCodeGoogleUrl($get['user_name'], $secret, 'HolyLive');
                         <h1>メールアドレスの変更</h1>
                         <p>お使いのアカウントに登録中のメールアドレスを変更します。</p>
                         <hr>
-                        <p>
-                            お使いのアカウントは2段階認証を設定可能です。<br>
-                            2段階認証の利用にはGoogle Authenticatorアプリが必要です。<br>
-                            以下からダウンロードして下さい。
-                        </p>
-                        <a href="https://apps.apple.com/us/app/google-authenticator/id388497605?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1284940800&h=7fc6b39acc8ae5a42ad4b87ff8c7f88d" alt="Download on the App Store" style="border-radius: 13px; width: 230px; height: 83px;"></a>
-                        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="Resources/google-play-badge.png" alt="Download on the Google Play Store" style="width: 250px; height: 100px;"></a>
-                        <p>
-                            2段階認証でのログイン不能を防ぐため、以下のメールアドレスの有効性を確認します。<br>
-                            ボタンを押すとメールが送信され、有効性が確認できれば有効化されます。
-                        </p>
                         <div class="mb-3">
-                            <label for="EmailCheck" class="form-label">有効化メールアドレス</label>
-                            <input type="email" class="form-control" id="EmailCheck" style="text-align: center;" value="<?=$get['email']?>" disabled>
+                            <label for="EmailCheck" class="form-label">新しいメールアドレス</label>
+                            <input type="email" class="form-control" id="EmailCheck" style="text-align: center;">
                         </div>
-                        <button type="button" class="btn btn-primary" style="width: 40%;margin-top: 10px;" onclick="location.href='mypage.php'">キャンセル</button>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">パスワード</label>
+                            <input type="password" class="form-control" id="password" style="text-align: center;">
+                        </div>
                         <button type="button" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;" onclick="location.href='TwoFactor/ActivateTwoFactor.php'">メールアドレスを確認</button>
                     </div>
                 </div>

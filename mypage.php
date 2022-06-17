@@ -40,79 +40,69 @@ if($result){
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="mypage.php">AuthSample</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="mypage.php">Home</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav float-end">
-                    <img src="<?=$get['user_pict']?>" width="35" height="35" alt="user_profile">
-                    <li class="nav-item dropdown" style="float: right;">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?=$get['user_name']?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="Process/Logout.php">ログアウト</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+    <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Sample</a>
+    </div>
     </nav>
     <div class="container">
-        <div class="back">
-            <div class="menu">
-                <div style="text-align: center">
-                    <h1>マイメニュー</h1>
-                    <hr>
-                    <a href="TwoFactorAuthorize.php">
-                        <div class="selector">
-                            <p>2段階認証の設定</p>
-                            <small>Google Authenticatorアプリを使用してログイン時に2段階認証を行えるようにします。</small>
-                        </div>
-                        <hr>
-                    </a>
-                    <a href="#">
-                        <div class="selector">
-                            <p>メールアドレスの更新</p>
-                            <small>現在のメールアドレスを更新します。</small>
-                        </div>
-                        <hr>
-                    </a>
-                    <a href="#">
-                        <div class="selector">
-                            <p>Googleアカウント連携</p>
-                            <small>お使いのアカウントにGoogleアカウントでのログイン機能を追加します。</small>
-                        </div>
-                        <hr>
-                    </a>
-                    <a href="#">
-                        <div class="selector">
-                            <p>パスワードの更新</p>
-                            <small>現在のパスワードを更新します。</small>
-                        </div>
-                        <hr>
-                    </a>
-                    <div style="margin-top: 10%;">
-                        <h2>操作危険範囲</h2>
-                        <hr>
+        <div class="glass">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="profile">
+                        <img src="<?=$get['user_pict']?>" width="200" height="200" alt="user_profile">
+                        <h2><?=$get['user_name']?></h2>
+                        <button type="button" name="button" class="btn btn-primary" onclick="location.href='Process/Logout.php'" style="width: 90%; margin: 10px;">ログアウト</button>
                     </div>
-                    <div style="margin-top: 10%;">
-                        <hr>
-                        <a href="#" style="color: red;">
-                            <div class="selector">
-                                <p>アカウントの削除</p>
-                                <small>アカウントを削除します。</small>
+                </div>
+                <div class="col-sm-9">
+                    <div class="menu">
+                        <div style="text-align: center">
+                            <h1>マイメニュー</h1>
+                            <hr>
+                            <a href="TwoFactorAuthorize.php">
+                                <div class="selector">
+                                    <p>2段階認証の設定</p>
+                                    <small>Google Authenticatorアプリを使用してログイン時に2段階認証を行えるようにします。</small>
+                                </div>
+                                <hr>
+                            </a>
+                            <a href="mailchange.php">
+                                <div class="selector">
+                                    <p>メールアドレスの更新</p>
+                                    <small>現在のメールアドレスを更新します。</small>
+                                </div>
+                                <hr>
+                            </a>
+                            <a href="#">
+                                <div class="selector">
+                                    <p>Googleアカウント連携</p>
+                                    <small>お使いのアカウントにGoogleアカウントでのログイン機能を追加します。</small>
+                                </div>
+                                <hr>
+                            </a>
+                            <a href="#">
+                                <div class="selector">
+                                    <p>パスワードの更新</p>
+                                    <small>現在のパスワードを更新します。</small>
+                                </div>
+                                <hr>
+                            </a>
+                            <div style="margin-top: 10%;">
+                                <h2>操作危険範囲</h2>
+                                <hr>
                             </div>
-                        </a>
-                        <hr>
+                            <div style="margin-top: 10%;">
+                                <hr>
+                                <a href="#" style="color: red;">
+                                    <div class="selector">
+                                        <p>アカウントの削除</p>
+                                        <small>アカウントを削除します。</small>
+                                    </div>
+                                </a>
+                                <hr>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

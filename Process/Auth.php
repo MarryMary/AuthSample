@@ -1,38 +1,60 @@
 <?php
-include dirname(__FILE__).'/../Tools/IsInGetTools.php';
+/*
+* ログイン処理の実行ファイル
+*/
 
+//必要ファイルのインクルード
+include dirname(__FILE__).'/../Tools/Session.php';
+include 'sql.php';
+
+//セッション開始
 SessionStarter();
+
+// POST送信のみ受け付ける
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if(isset($_POST['email']) && isset($_POST['password'])){
-        include 'sql.php';
+    // emailとpasswordフィールドに送信されているか、または空文字でないか
+    if(isset($_POST['email']) && isset($_POST['password']) && trim($_POST['email']) != '' && trim($_POST['password']) !=  ''){
+        // メールアドレスを基にデータを取得
         $stmt = $pdo->prepare("SELECT * FROM User WHERE email = :email");
         $stmt->bindParam( ':email', $_POST['email'], PDO::PARAM_STR);
         $res = $stmt->execute();
+
+        // SQLが実行できた場合
         if($res) {
+            // データを全件取得
             $data = $stmt->fetch();
-            $password = $data['pass'];
+            
+            // もしデータが全県取得できていて、パスワードが一致する場合
+            is_bool($data) ? '' : $password = $data['pass'];
             if(!is_bool($data) && password_verify($_POST['password'], $password)){
+
+                // 2段階認証が有効化されている場合
                 if($data['IsTwoFactor'] == 1){
-                    $_SESSION['IsAuth'] = False;
-                    $_SESSION['UserId'] = $data['id'];
-                    $_SESSION['NeedTwoFactor'] = True;
+                    // 2段階認証フラグとユーザーIDをセッションに代入、まだ認証されていないことをセッションに代入
+                    SessionInsert('IsAuth', False);
+                    SessionInsert('UserId', $data['id']);
+                    SessionInsert('NeedTwoFactor', True);
+
+                    // 2段階認証のメニューを表示
                     header('Location: /AuthSample/TwoFactor/whichTwoFactor.php');
                 }else{
-                    $_SESSION['IsAuth'] = True;
-                    $_SESSION['UserId'] = $data['id'];
+                    // 2段階認証が有効化されていない場合はマイページにリダイレクト
+                    SessionInsert('IsAuth', True);
+                    SessionInsert('UserId', $data['id']);
                     header('Location: /AuthSample/mypage.php');
                 }
             }else{
-                $_SESSION['err'] = 'メールアドレスまたはパスワードが間違っています。';
+                SessionInsert('err', 'メールアドレスまたはパスワードが間違っています。');
                 header('Location: /AuthSample/login.php');
             }
         }else{
-            $_SESSION['err'] = 'エラーが発生しました。もう一度お試し下さい。';
+            SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
             header('Location: /AuthSample/login.php');
         }
+        // PDO接続解除
         $pdo = null;
     }else{
-        $_SESSION['err'] = 'メールアドレスまたはパスワードが入力されていません。';
+        SessionInsert('err', 'メールアドレスまたはパスワードが入力されていません。');
         header('Location: /AuthSample/login.php');
     }
 }else{

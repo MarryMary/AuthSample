@@ -1,12 +1,15 @@
 <?php
-
-use Google\Service\Fitness\Session;
-
+/*
+* Googleシングルサインオン処理ファイル
+*/
+// 必要ファイルのインクルード
 require_once dirname(__FILE__).'/../vendor/autoload.php';
 include dirname(__FILE__).'/../Tools/IsInGetTools.php';
 
 SessionStarter();
+// POST送信されているか確認
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    // id_token(Google個人識別用ID)がPOST送信されているか
     if(isset($_POST['id_token'])){
         $id_token = filter_input(INPUT_POST, 'id_token');
         define('CLIENT_ID', '345840626602-q37bp5di0lrr53n3bar423uhg90rff67.apps.googleusercontent.com');
