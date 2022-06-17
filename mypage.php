@@ -61,14 +61,14 @@ if($result){
                         <div style="text-align: center">
                             <h1>マイメニュー</h1>
                             <hr>
-                            <a href="mailchange.php">
+                            <a href="Change/username.php">
                                 <div class="selector">
                                     <p>ユーザー名の変更</p>
                                     <small>ユーザー名を変更します。</small>
                                 </div>
                                 <hr>
                             </a>
-                            <a href="#">
+                            <a href="Change/userpict.php">
                                 <div class="selector">
                                     <p>ユーザー画像の変更</p>
                                     <small>ユーザー画像を変更します。</small>
@@ -82,14 +82,14 @@ if($result){
                                 </div>
                                 <hr>
                             </a>
-                            <a href="#">
+                            <a href="Change/password.php">
                                 <div class="selector">
                                     <p>パスワードの変更</p>
                                     <small>ログインパスワードを変更します。</small>
                                 </div>
                                 <hr>
                             </a>
-                            <a href="#">
+                            <a href="Change/gauthlink.php">
                                 <div class="selector">
                                     <p>Googleアカウント連携</p>
                                     <small>お使いのアカウントにGoogleアカウントでのログイン機能を追加します。</small>

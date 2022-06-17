@@ -3,7 +3,7 @@
  * パスワード忘れで新規パスワード登録処理を行うファイル
  */
 // 必要ファイルのインクルード
-include dirname(__FILE__).'/../Tools/IsInGetTools.php';
+include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
 include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
 
@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     // ユーザーテーブルのパスワードを新しいパスワードで上書き
                     $stmt = $pdo->prepare("UPDATE User SET pass = :password WHERE id = :id");
                     $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-                    $stmt->bindParam(':id', $data['id'], PDO::PARAM_STR);
+                    $stmt->bindParam(':id', $get['id'], PDO::PARAM_INT);
                     $res = $stmt->execute();
 
                     // SQLが正しく実行できた場合

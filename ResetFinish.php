@@ -20,7 +20,7 @@ if(SessionIsIn('registration')){
 
     // フォーム作成
     $form = <<<EOF
-<p>パスワードのリセットが完了しました。<br>
+<p>パスワードの変更が完了しました。<br>
 次回ログインからは新しいパスワードでログインできます。
 </p>
 <div style="text-align: center;">

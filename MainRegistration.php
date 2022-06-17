@@ -17,7 +17,7 @@ if(isset($_GET["token"])){
     $stmt->execute();
 
     // そのトークンを持ったアカウントを検索(UUID V4)
-    $stmt = $pdo->prepare("SELECT * FROM PreUser WHERE user_token = :token");
+    $stmt = $pdo->prepare("SELECT * FROM PreUser WHERE register_type = 0 AND user_token = :token");
     $stmt->bindValue(':token', $_GET["token"], PDO::PARAM_STR);
     $res = $stmt->execute();
 

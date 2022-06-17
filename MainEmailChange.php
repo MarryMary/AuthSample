@@ -27,16 +27,30 @@ if(isset($_GET["token"])){
         $result = $stmt->fetch();
         //取得できた場合（条件一致が0件の場合はFalseになる）
         if(!is_bool($result)){
-            // セッションにトークン情報とメールアドレスを代入
-            SessionInsert('token', $_GET['token']);
-            SessionInsert('email', $result['email']);
-            // email変数にemail情報を代入
-            $email = $result['email'];
+            $stmt = $pdo->prepare("UPDATE User SET pass = :password WHERE id = :id");
+            $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $data['id'], PDO::PARAM_STR);
+            $res = $stmt->execute();
+
+            // SQLが正しく実行できた場合
+            if ($res) {
+                // 仮ユーザーテーブルから今回の情報を削除
+                $stmt = $pdo->prepare("DELETE FROM PreUser WHERE user_token = :user_token");
+                $stmt->bindParam(':user_token', $token, PDO::PARAM_STR);
+                $res = $stmt->execute();
+
+                // 登録完了フラグを立ててリセット完了画面へ遷移
+                SessionInsert('registration', True);
+                header('Location: /AuthSample/ResetFinish.php');
+                // SQLが正しく実行できなかった場合
+            } else {
+                header('Location: /AuthSample/login.php');
+            }
 
 
-            $title = 'Forget';
-            $card_name = 'パスワードのリセット';
-            $message = 'パスワードのリセットを行うには以下の情報を追加して下さい。';
+            $title = 'Update Completed';
+            $card_name = 'メールアドレスの更新完了';
+            $message = 'メールアドレスの更新が完了しました。';
             $errtype = False;
             if(SessionIsIn('err')){
                 $errtype = True;
@@ -46,16 +60,11 @@ if(isset($_GET["token"])){
 
             // フォーム作成
             $form = <<<EOF
-<form action="Process/PassForget.php" method="POST" enctype="multipart/form-data">
-    <div class="mb-3">
-        <input type='password' name='password1' class="form-control" placeholder='パスワード'>
-        <div id="emailHelp" class="form-text">パスワードは8字以上16字以下で、「?、!、#、,」のいずれかの記号が入っている必要があります。</div>
-    </div>
-    <input type='password' name='password2' class="form-control" placeholder='パスワード(確認用)' style='margin-bottom: 3%;'>
-    <div style="text-align: center; margin-top: 10px;">
-        <button type='submit' class='btn btn-primary' style="width: 80%;">リセット</button>
-    </div>
-</form>
+<p>
+    メールアドレスの更新が完了しました。<br>
+    次回ログイン時からは新しいメールアドレスでログインして下さい。<br>
+    メールアドレスが変わってもGoogleでのシングルサインオンには影響がありませんのでご安心下さい。
+</p>
 
 EOF;
 

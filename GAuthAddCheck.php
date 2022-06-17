@@ -40,7 +40,7 @@ if(isset($_SESSION['email']) && isset($_SESSION['userid'])){
             <img src='{$file}' alt='profile' width='200' height='200'>
         </div>
         <div style="text-align: center; margin-top: 10px;">
-            <button type="button" class="btn btn-primary" onclick="history.back()" style="width: 40%;">戻る</button>
+            <button type="button" class="btn btn-primary" onclick="/AuthSample/GAuthAddCheck.php" style="width: 40%;">戻る</button>
             <button type="submit" class="btn btn-success" style="width: 40%;">登録</button><br>
         </div>
     </form>

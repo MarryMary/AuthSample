@@ -112,7 +112,6 @@ EOF;
 <form action="GAppEnable.php" method="POST">
 <input type='text' name='token' class="form-control" placeholder='2段階認証コード' style='margin-bottom: 3%;' maxlength="6">
 <div style="text-align: center;">
-<button type='button' class='btn btn-primary' onclick="history.back()" style="width: 40%;">今は設定しない</button>
 <button type='submit' class='btn btn-success' style="width: 40%;">送信</button>
 </div>
 </form>

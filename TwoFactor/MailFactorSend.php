@@ -7,6 +7,7 @@ include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
 include dirname(__FILE__).'/../Tools/MailSender.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッション開始
 SessionStarter();
@@ -40,7 +41,7 @@ if(!$res){
             $rand_str = substr(str_shuffle($str), 0, 6);
             $template = file_get_contents(dirname(__FILE__).'/../Template/CodeTemplate.html');
             $template = str_replace('{{TOKEN}}', $rand_str, $template);
-            EmailSender($data["email"], "$SERVICE_NAME2段階認証コード", $template);
+            EmailSender($data["email"], "$SERVICE_NAME 2段階認証コード", $template);
             SessionInsert('2Factor-Token', $rand_str);
         }
 

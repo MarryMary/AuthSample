@@ -34,12 +34,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $get = $stmt->fetch();
 
             // データが存在する場合
-            if(is_bool($get)){
+            if(!is_bool($get)){
                 // パスワードを確認
                 if(password_verify($_POST['password'], $get['pass'])){
                     // ユーザー名をアップデート
-                    $pdo->prepare('UPDATE User SET user_name = :username WHERE id = :id');
-                    $stmt->bindValue(':username', htmlspecialchars($username), PDO::PARAM_INT);
+                    $stmt = $pdo->prepare('UPDATE User SET user_name = :username WHERE id = :id');
+                    $stmt->bindValue(':username', htmlspecialchars($_POST['username']), PDO::PARAM_STR);
                     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
                     $res = $stmt->execute();
 
