@@ -3,7 +3,7 @@
  * 新規登録処理を実施するファイル
  */
 // 必要ファイルのインクルード
-include dirname(__FILE__).'/../Tools/IsInGetTools.php';
+include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
 
 // セッションの開始

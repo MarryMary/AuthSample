@@ -14,6 +14,9 @@ SessionStarter();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // emailとpasswordフィールドに送信されているか、または空文字でないか
     if(isset($_POST['email']) && isset($_POST['password']) && trim($_POST['email']) != '' && trim($_POST['password']) !=  ''){
+        $stmt = $pdo->prepare("delete from User WHERE delete_at<=sysdate() - interval 30 day");
+        $stmt->execute();
+        
         // メールアドレスを基にデータを取得
         $stmt = $pdo->prepare("SELECT * FROM User WHERE email = :email");
         $stmt->bindParam( ':email', $_POST['email'], PDO::PARAM_STR);

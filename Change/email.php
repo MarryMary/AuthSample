@@ -61,15 +61,17 @@ if($result){
                         <h1>メールアドレスの変更</h1>
                         <p>お使いのアカウントに登録中のメールアドレスを変更します。</p>
                         <hr>
-                        <div class="mb-3">
-                            <label for="EmailCheck" class="form-label">新しいメールアドレス</label>
-                            <input type="email" class="form-control" id="EmailCheck" style="text-align: center;">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">パスワード</label>
-                            <input type="password" class="form-control" id="password" style="text-align: center;">
-                        </div>
-                        <button type="button" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;" onclick="location.href='TwoFactor/ActivateTwoFactor.php'">メールアドレスを確認</button>
+                        <form method="POST" action="/AuthSample/Process/PreEmailChange.php">
+                            <div class="mb-3">
+                                <label for="EmailCheck" class="form-label">新しいメールアドレス</label>
+                                <input type="email" class="form-control" id="EmailCheck" name='email' style="text-align: center;">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">パスワード</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="style="text-align: center;">
+                            </div>
+                            <button type="submit" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;">メールアドレスを確認</button>
+                        </form>
                     </div>
                 </div>
             </div>
