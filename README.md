@@ -19,6 +19,7 @@
 |:---:|:---:|:--------------------------------:|
 |id|INT NOT NULL AUTO_INCREMENT|     システム内部で識別するためのIDとして使用します     |
 |email|VARCHAR(256) NOT NULL|          メールアドレス最長は254           |
+|email|VARCHAR(255) NOT NULL|          ユーザー名は255文字以内           |
 |pass|VARCHAR(255) NOT NULL||
 |user_pict|VARCHAR(255) NOT NULL|        ユーザー画像を保存するパスを入力する        |
 |GAuthID|VARCHAR(255)| Google SSOで使用される個人識別用のIDをインサートする |
@@ -35,7 +36,7 @@
 |  user_token   |VARCHAR(255) NOT NULL|   アクティベート用のUUIDをインサートします。UUIDはPHPで生成します。   |
 |email|VARCHAR(256) NOT NULL|               メールアドレス最長は254                |
 |  register_at  |DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP|          仮登録時の日時を入力します。24時間で物理削除           |
-| register_type |INT(1) NOT NULL| 仮登録を0、パスワード忘れを1、メール更新を2、強制2段階認証突破を3で登録します。 |
+| register_type |INT(1) NOT NULL| 仮登録を0、パスワード忘れを1、メール更新を2、メールによる2段階認証を3で登録します。 |
 ---
 
 ## JavaScriptについて
@@ -44,4 +45,4 @@
 ## 備考
 * 今回は動作が把握しやすいように素のPHPを使用しています。
 * GoogleでのシングルサインオンにはGoogle Cloud Platformのアプリテスト用プロジェクトを使用しています。
-* Google Authenticatiorでの使用を想定していますが、多分Microsoft Authenticator等の互換アプリを使用することもできます。
+* Google Authenticatiorでの使用を想定していますが、多分Microsoft Authenticator等の互換アプリを使用することもできます。  
