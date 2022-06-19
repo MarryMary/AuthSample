@@ -70,18 +70,18 @@ if(SessionIsIn('err')){
                             お使いのアカウントを削除します。<br>
                             アカウントを削除するとデータが消滅し、以下の機能が利用できなくなります。<br>
                         </p>
-                            <ul>
-                                <li>学習データ</li>
-                                <li>進捗情報</li>
+                            <ul style="list-style-position: inside;">
+                                <li>学習データ　</li>
+                                <li>進捗情報　　</li>
                                 <li>プロフィール</li>
                             </ul>
                         <p>
                             また、削除から30日以内に再ログインした場合はアカウントを復活することができます。
                         </p>
                         <form method='post' action='/AuthSample/Process/DelAccount.php'>
-                            <div class="form-check" style="text-align: center;">
-                                <input class="form-check-input" type="checkbox" value="understand" id="understand">
+                            <div class="form-check" style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
                                 <label class="form-check-label" for="understand">
+                                    <input class="form-check-input" type="checkbox" name="understand" value="understand" id="understand">
                                     上記の内容を理解した
                                 </label>
                             </div>
@@ -89,7 +89,7 @@ if(SessionIsIn('err')){
                                 <label for="password" class="form-label">現在のパスワード</label>
                                 <input type="password" class="form-control" id="password" name="password" style="text-align: center;">
                             </div>
-                            <button type="submit" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;">削除</button>
+                            <button type="submit" class="btn btn-danger" style="width: 40%;margin-top: 10px; margin-left: 10px;">削除</button>
                         </form>
                     </div>
                 </div>

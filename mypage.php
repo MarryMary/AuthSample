@@ -109,7 +109,7 @@ if($result){
                             </div>
                             <div style="margin-top: 10%;">
                                 <hr>
-                                <a href="#" style="color: red;">
+                                <a href="Change/del.php" style="color: red;">
                                     <div class="selector">
                                         <p>アカウントの削除</p>
                                         <small>アカウントを削除します。</small>

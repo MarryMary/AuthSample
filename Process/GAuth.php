@@ -78,7 +78,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_token'])){
                         }else{
                             // 論理削除状態の場合
                             SessionInsert('Recover', True);
-                            SessionInsert('IsAuth', False);
                             SessionInsert('UserId', $data['id']); 
                             header('Location: /AuthSample/RecoverAccount.php');
                         }
@@ -114,7 +113,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_token'])){
                 }else{
                     // 論理削除状態の場合
                     SessionInsert('Recover', True);
-                    SessionInsert('IsAuth', False);
                     SessionInsert('UserId', $data['id']); 
                     header('Location: /AuthSample/RecoverAccount.php');
                 }

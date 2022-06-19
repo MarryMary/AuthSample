@@ -11,8 +11,8 @@ SessionStarter();
 
 // アカウント削除完了フラグがセッションに存在する場合
 if(SessionIsIn('finished')){
-    // それぞれのセッション情報を削除(再度この画面へのアクセスを防ぐため)
-    SessionUnset('finished');
+    // ログアウト
+    SessionUnset();
 
     $title = 'Thank you for using';
     $card_name = 'アカウント削除完了';

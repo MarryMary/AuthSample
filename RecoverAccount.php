@@ -24,9 +24,19 @@ if(SessionIsIn('Recover')){
     もし以前使用していたアカウントを復元したい場合は、復元ボタンを押して下さい。
 </p>
 <div style="text-align: center; margin-top: 10px;">
-            <button type="button" class="btn btn-primary" onclick="/AuthSample/Process/RecoverAccount.php?cancel=true" style="width: 40%;">キャンセル</button>
-            <button type="button" class="btn btn-success" onclick="/AuthSample/Process/RecoverAccount.php" style="width: 40%;">復元</button><br>
-        </div>
+    <button type="button" class="btn btn-primary" onclick="location.href='/AuthSample/Process/RecoverAccount.php?cancel=true'" style="width: 40%;">キャンセル</button>
+    <button type="button" class="btn btn-success" onclick="location.href='/AuthSample/Process/RecoverAccount.php'" style="width: 40%;">復元</button><br>
+</div>
+EOF;
+
+    $JS = <<<EOF
+<script>
+    history.pushState(null, null, location.href);
+    window.addEventListener('popstate', (e) => {
+      history.go(1);
+      alert('このサイトでは戻るボタンの使用することはできません。前の画面に戻る場合は必ずページ内のキャンセルボタンを押して下さい。');
+    });
+</script>
 EOF;
 
     // テンプレートファイル読み込み

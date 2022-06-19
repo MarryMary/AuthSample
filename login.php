@@ -18,7 +18,7 @@ if(SessionIsIn('IsAuth') && SessionReader('IsAuth')){
     header("Location: TwoFactor/whichTwoFactor.php");
 // アカウント復元フラグが立っている場合
 }elseif(SessionIsIn('Recover') && SessionIsIn('UserId')){
-    // セッション情報を削除(再度この画面へのアクセスを防ぐため)
+    // セッション情報を削除
     SessionUnset('Recover');
     SessionUnset('UserId');
 }

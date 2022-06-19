@@ -33,7 +33,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             if(!is_bool($data) && password_verify($_POST['password'], $password)){
                 
                 // 論理削除状態でない場合
-                if($data['delete_flag'] == 1){
+                if($data['delete_flag'] != 1){
                     // 2段階認証が有効化されている場合
                     if($data['IsTwoFactor'] == 1){
                         // 2段階認証フラグとユーザーIDをセッションに代入、まだ認証されていないことをセッションに代入
@@ -52,7 +52,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 }else{
                     // 論理削除状態の場合
                     SessionInsert('Recover', True);
-                    SessionInsert('IsAuth', False);
                     SessionInsert('UserId', $data['id']); 
                     header('Location: /AuthSample/RecoverAccount.php');
                 }
