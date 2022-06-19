@@ -3,9 +3,9 @@
  * 2段階認証設定画面
  */
 // 必要ファイルのインクルード
-include 'Tools/Session.php';
-include 'vendor/autoload.php';
-include 'Tools/SQL.php';
+include dirname(__FILE__).'/../Tools/Session.php';
+include dirname(__FILE__).'/../vendor/autoload.php';
+include dirname(__FILE__).'/../Tools/SQL.php';
 
 // セッション開始
 SessionStarter();
@@ -35,7 +35,7 @@ if($result){
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>MyPage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="/AuthSample/CSS/style.css">
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
@@ -59,7 +59,8 @@ if($result){
                     <br>
                     <div style="text-align: center">
                         <h1>メールアドレスの変更</h1>
-                        <p>お使いのアカウントに登録中のメールアドレスを変更します。</p>
+                        <p style="color: <?=SessionIsIn('err') ? 'red' : 'black' ?>"><?=SessionIsIn('err') ? SessionReader('err') : 'お使いのアカウントに登録中のメールアドレスを変更します。' ?></p>
+                        <?=SessionIsIn('err') ? SessionUnset('err') : '' ?>
                         <hr>
                         <form method="POST" action="/AuthSample/Process/PreEmailChange.php">
                             <div class="mb-3">
@@ -68,7 +69,7 @@ if($result){
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">パスワード</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="style="text-align: center;">
+                                <input type="password" class="form-control" id="password" name="password" style="text-align: center;">
                             </div>
                             <button type="submit" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;">メールアドレスを確認</button>
                         </form>

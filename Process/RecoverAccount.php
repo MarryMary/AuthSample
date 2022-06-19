@@ -37,7 +37,6 @@ if(SessionIsIn('Recover') && SessionIsIn('UserId')){
                 $stmt->bindParam( ':id', $id, PDO::PARAM_INT);
                 $res = $stmt->execute();
 
-                SessionUnset();
                 SessionInsert('err', 'アカウントが復元されました。再度ログインして下さい。');
                 header('Location: /AuthSample/login.php');
             // ユーザーが論理削除ではないか、ユーザーが見つからなかった場合    

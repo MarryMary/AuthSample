@@ -10,21 +10,7 @@ include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
 // セッション開始
 SessionStarter();
 
-// ログイン状態の場合はmypage.phpへ推移
-if(SessionIsIn('IsAuth') && SessionReader('IsAuth')){
-    header("Location: mypage.php");
-//ログインはしているがIsAuthがFalse(2段階認証未実施)の場合はwhichTwoFactor.phpに遷移
-}elseif(SessionIsIn('IsAuth') && !SessionReader('IsAuth')){
-    header("Location: TwoFactor/whichTwoFactor.php");
-// アカウント復元フラグが立っている場合
-}elseif(SessionIsIn('Recover') && SessionIsIn('UserId')){
-    // セッション情報を削除
-    SessionUnset('Recover');
-    SessionUnset('UserId');
-}
-
-$title = 'Login';
-$card_name = 'ログイン';
+// セッションが消える前にエラーを保存
 $message = '続行するにはログインしてください。';
 $errtype = False;
 if(SessionIsIn('err')){
@@ -32,6 +18,21 @@ if(SessionIsIn('err')){
     $message = SessionReader('err');
     SessionUnset('err');
 }
+
+// アカウント復元フラグが立っている場合
+if(SessionIsIn('Recover') && SessionIsIn('UserId')){
+    // セッション情報を削除
+    SessionUnset();
+// ログイン状態の場合はmypage.phpへ推移
+}elseif(SessionIsIn('IsAuth') && SessionReader('IsAuth')){
+    header("Location: mypage.php");
+//ログインはしているがIsAuthがFalse(2段階認証未実施)の場合はwhichTwoFactor.phpに遷移
+}elseif(SessionIsIn('IsAuth') && !SessionReader('IsAuth')){
+    header("Location: TwoFactor/whichTwoFactor.php");
+}
+
+$title = 'Login';
+$card_name = 'ログイン';
 
 // Googleシングル・サインオン用のJavaScriptを読み込み
 $GAuthJS = '<script src="https://accounts.google.com/gsi/client" async defer></script><div id="g_id_onload" data-client_id="345840626602-q37bp5di0lrr53n3bar423uhg90rff67.apps.googleusercontent.com" data-callback="AuthorizeStart"></div>';

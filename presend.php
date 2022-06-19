@@ -12,7 +12,7 @@ SessionStarter();
 // メール送信完了フラグがセッションに存在する場合
 if(SessionIsIn('finished')){
     // それが2段階認証ではなかった場合（2段階認証の場合はログイン状態で全て処理を完結させる必要があるため）
-    if(!SessionIsIn('twofactor')) {
+    if(!SessionIsIn('twofactor') && !SessionIsIn('mailchange')) {
         SessionUnset();
     }else{
         // それぞれのセッション情報を削除(再度この画面へのアクセスを防ぐため)
@@ -20,8 +20,13 @@ if(SessionIsIn('finished')){
         // 2段階認証設定フラグがある場合はそれも削除
         if(SessionIsIn('twofactor')) {
             SessionUnset('twofactor');
+        // メール設定フラグがある場合はそれも削除
+        }elseif(SessionIsIn('mailchange')){
+            SessionUnset('mailchange'); 
         }
     }
+
+    
 
     $title = 'Finished';
     $card_name = '申請完了';

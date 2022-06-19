@@ -29,32 +29,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // 両方のSQLが正しく実行できた場合
         if($cr && $precr){
-            // ユーザーテーブルにデータはあるが、仮ユーザーテーブルにはデータがない場合
-            if(!is_bool($mainstmt->fetch()) && is_bool($stmt->fetch())){
-                // 仮ユーザーテーブルにデータをインサート
-                $stmt = $pdo->prepare("INSERT INTO PreUser (email, user_token, register_type) VALUES (:email, :user_token, :register_type)");
-                $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
-                $stmt->bindParam(':user_token', $uuid, PDO::PARAM_STR);
-                $stmt->bindParam(':register_type', $type, PDO::PARAM_INT);
-                $res = $stmt->execute();
 
-                // SQLが正しく実行できた場合
-                if ($res) {
-                    // メールテンプレートを取得して、サービス名とURLを設定してメール送信
-                    $template = file_get_contents(dirname(__FILE__).'/../Template/MailUpdate.html');
-                    $template = str_replace('{{URL}}', $SERVICE_URL.'MainPasswordReset.php?token='.$uuid, $template);
-                    EmailSender($_POST['email'], 'メールアドレス変更のご案内', $template);
+            // 現在のユーザーデータを取得
+            $id = SessionReader('UserId');
+            $state = $pdo->prepare("SELECT * FROM User WHERE id = :id");
+            $state->bindParam(':id', $id, PDO::PARAM_STR);
+            $state->execute();
+            $data = $state->fetch();
 
-                    // 登録完了フラグを立てて送信済み画面へ遷移
-                    SessionInsert('finished', True);
-                    header('Location: /AuthSample/presend.php');
-                    // SQLが正しく実行できなかった場合
-                } else {
-                    SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-                    header('Location: /AuthSample/forget.php');
+            // ユーザーテーブルにも仮ユーザーテーブルにもデータがない場合
+            if(is_bool($mainstmt->fetch()) && is_bool($stmt->fetch())){
+                if(password_verify($_POST['password'], $data['pass'])){
+                    // 仮ユーザーテーブルにデータをインサート
+                    $stmt = $pdo->prepare("INSERT INTO PreUser (email, user_token, register_type) VALUES (:email, :user_token, :register_type)");
+                    $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
+                    $stmt->bindParam(':user_token', $uuid, PDO::PARAM_STR);
+                    $stmt->bindParam(':register_type', $type, PDO::PARAM_INT);
+                    $res = $stmt->execute();
+
+                    // SQLが正しく実行できた場合
+                    if ($res) {
+                        // メールテンプレートを取得して、サービス名とURLを設定してメール送信
+                        $template = file_get_contents(dirname(__FILE__).'/../Template/MailUpdate.html');
+                        $template = str_replace('{{URL}}', $SERVICE_URL.'MainEmailChange.php?token='.$uuid, $template);
+                        EmailSender($_POST['email'], 'メールアドレス変更のご案内', $template);
+
+                        // 登録完了フラグを立てて送信済み画面へ遷移
+                        SessionInsert('finished', True);
+                        SessionInsert('mailchange', True); 
+                        header('Location: /AuthSample/presend.php');
+                        // SQLが正しく実行できなかった場合
+                    } else {
+                        SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
+                        header('Location: /AuthSample/forget.php');
+                    }
+                    // PDO接続解除
+                    $pdo = null;
+                }else{
+                    SessionInsert('err', 'パスワードが間違っています。');
+                    header('Location: /AuthSample/Change/email.php');
                 }
-                // PDO接続解除
-                $pdo = null;
                 // ユーザーテーブルにデータが無いかまたは仮ユーザーテーブルにデータが入っている場合
             }else{
                 SessionInsert('err', 'そのメールアドレスは他のアカウントに登録されているか、または既に貴方のアカウントに登録されている可能性があります。');

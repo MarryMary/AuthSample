@@ -75,7 +75,7 @@ if($result){
                                 </div>
                                 <hr>
                             </a>
-                            <a href="mailchange.php">
+                            <a href="Change/email.php">
                                 <div class="selector">
                                     <p>メールアドレスの変更</p>
                                     <small>現在のメールアドレスを変更します。</small>

@@ -17,7 +17,7 @@ if(isset($_GET["token"])){
     $stmt->execute();
 
     // そのトークンを持ったアカウントを検索(UUID V4)
-    $stmt = $pdo->prepare("SELECT * FROM PreUser WHERE register_type = 1 AND user_token = :token");
+    $stmt = $pdo->prepare("SELECT * FROM PreUser WHERE register_type = 2 AND user_token = :token");
     $stmt->bindValue(':token', $_GET["token"], PDO::PARAM_STR);
     $res = $stmt->execute();
 
@@ -27,22 +27,20 @@ if(isset($_GET["token"])){
         $result = $stmt->fetch();
         //取得できた場合（条件一致が0件の場合はFalseになる）
         if(!is_bool($result)){
-            $stmt = $pdo->prepare("UPDATE User SET pass = :password WHERE id = :id");
-            $stmt->bindParam(':password', $password, PDO::PARAM_STR);
-            $stmt->bindParam(':id', $data['id'], PDO::PARAM_STR);
+            $email = $result['email'];
+            $id = SessionReader('UserId');
+            $stmt = $pdo->prepare("UPDATE User SET email = :email WHERE id = :id");
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
             $res = $stmt->execute();
 
             // SQLが正しく実行できた場合
             if ($res) {
                 // 仮ユーザーテーブルから今回の情報を削除
                 $stmt = $pdo->prepare("DELETE FROM PreUser WHERE user_token = :user_token");
-                $stmt->bindParam(':user_token', $token, PDO::PARAM_STR);
+                $stmt->bindParam(':user_token', $_GET["token"], PDO::PARAM_STR);
                 $res = $stmt->execute();
-
-                // 登録完了フラグを立ててリセット完了画面へ遷移
-                SessionInsert('registration', True);
-                header('Location: /AuthSample/ResetFinish.php');
-                // SQLが正しく実行できなかった場合
+            // SQLが正しく実行できなかった場合
             } else {
                 header('Location: /AuthSample/login.php');
             }
@@ -65,16 +63,11 @@ if(isset($_GET["token"])){
     次回ログイン時からは新しいメールアドレスでログインして下さい。<br>
     メールアドレスが変わってもGoogleでのシングルサインオンには影響がありませんのでご安心下さい。
 </p>
+<div style="text-align:center;">
+    <button type="button" class="btn btn-primary" onclick="location.href='/AuthSample/index.php'" style="width: 90%;">ホームへ戻る</button>
+</div>
 
 EOF;
-
-
-            // JavaScript指定
-            $scriptTo = 'JavaScript/Register.js';
-            // cropper.js関連のJavaScriptを読み込み
-            $JS = '<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js" type="text/javascript"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cropper/1.0.1/jquery-cropper.js" type="text/javascript"></script>';
-
             // テンプレートファイルをインクルード
             include dirname(__FILE__).'/Template/BaseTemplate.php';
         }else{
