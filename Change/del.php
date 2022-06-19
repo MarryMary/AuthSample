@@ -89,7 +89,7 @@ if(SessionIsIn('err')){
                                 <label for="password" class="form-label">現在のパスワード</label>
                                 <input type="password" class="form-control" id="password" name="password" style="text-align: center;">
                             </div>
-                            <button type="submit" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;">変更</button>
+                            <button type="submit" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;">削除</button>
                         </form>
                     </div>
                 </div>

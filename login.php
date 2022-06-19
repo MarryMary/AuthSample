@@ -16,6 +16,11 @@ if(SessionIsIn('IsAuth') && SessionReader('IsAuth')){
 //ログインはしているがIsAuthがFalse(2段階認証未実施)の場合はwhichTwoFactor.phpに遷移
 }elseif(SessionIsIn('IsAuth') && !SessionReader('IsAuth')){
     header("Location: TwoFactor/whichTwoFactor.php");
+// アカウント復元フラグが立っている場合
+}elseif(SessionIsIn('Recover') && SessionIsIn('UserId')){
+    // セッション情報を削除(再度この画面へのアクセスを防ぐため)
+    SessionUnset('Recover');
+    SessionUnset('UserId');
 }
 
 $title = 'Login';

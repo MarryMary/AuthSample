@@ -14,7 +14,8 @@ SessionStarter();
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // emailとpasswordフィールドに送信されているか、または空文字でないか
     if(isset($_POST['email']) && isset($_POST['password']) && trim($_POST['email']) != '' && trim($_POST['password']) !=  ''){
-        $stmt = $pdo->prepare("delete from User WHERE delete_at<=sysdate() - interval 30 day");
+        // 論理削除から30日が経過したユーザーを物理削除
+        $stmt = $pdo->prepare("delete from User WHERE delete_flag = 1 AND delete_at<=sysdate() - interval 30 day");
         $stmt->execute();
         
         // メールアドレスを基にデータを取得
@@ -30,21 +31,30 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             // もしデータが全県取得できていて、パスワードが一致する場合
             is_bool($data) ? '' : $password = $data['pass'];
             if(!is_bool($data) && password_verify($_POST['password'], $password)){
+                
+                // 論理削除状態でない場合
+                if($data['delete_flag'] == 1){
+                    // 2段階認証が有効化されている場合
+                    if($data['IsTwoFactor'] == 1){
+                        // 2段階認証フラグとユーザーIDをセッションに代入、まだ認証されていないことをセッションに代入
+                        SessionInsert('IsAuth', False);
+                        SessionInsert('UserId', $data['id']);
+                        SessionInsert('NeedTwoFactor', True);
 
-                // 2段階認証が有効化されている場合
-                if($data['IsTwoFactor'] == 1){
-                    // 2段階認証フラグとユーザーIDをセッションに代入、まだ認証されていないことをセッションに代入
-                    SessionInsert('IsAuth', False);
-                    SessionInsert('UserId', $data['id']);
-                    SessionInsert('NeedTwoFactor', True);
-
-                    // 2段階認証のメニューを表示
-                    header('Location: /AuthSample/TwoFactor/whichTwoFactor.php');
+                        // 2段階認証のメニューを表示
+                        header('Location: /AuthSample/TwoFactor/whichTwoFactor.php');
+                    }else{
+                        // 2段階認証が有効化されていない場合はマイページにリダイレクト
+                        SessionInsert('IsAuth', True);
+                        SessionInsert('UserId', $data['id']);
+                        header('Location: /AuthSample/mypage.php');
+                    }
                 }else{
-                    // 2段階認証が有効化されていない場合はマイページにリダイレクト
-                    SessionInsert('IsAuth', True);
-                    SessionInsert('UserId', $data['id']);
-                    header('Location: /AuthSample/mypage.php');
+                    // 論理削除状態の場合
+                    SessionInsert('Recover', True);
+                    SessionInsert('IsAuth', False);
+                    SessionInsert('UserId', $data['id']); 
+                    header('Location: /AuthSample/RecoverAccount.php');
                 }
             }else{
                 // ユーザー情報が見つからなかった場合
