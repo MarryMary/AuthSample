@@ -41,6 +41,7 @@
 |email|VARCHAR(256) NOT NULL|               メールアドレス最長は254                |
 |  register_at  |DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP|          仮登録時の日時を入力します。24時間で物理削除           |
 | register_type |INT(1) NOT NULL| 仮登録を0、パスワード忘れを1、メール更新を2、メールによる2段階認証を3で登録します。 |
+| affect_id |BIGINT| メールアドレス更新時など、ユーザーテーブル情報を書き換える前段階でこのテーブルを使用する場合は、適用するユーザーのIDをここに格納します。 |
 ---
 
 ## JavaScriptについて
