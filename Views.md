@@ -1,7 +1,8 @@
 # 見た目
 
 # ログイン画面
-<img width="1792" alt="スクリーンショット 2022-06-20 18 13 58" src="https://user-images.githubusercontent.com/92404990/174568533-4969b63e-917d-485d-b6c1-c1b7714f7c07.png">
+<img width="1792" alt="スクリーンショット 2022-06-20 18 29 57" src="https://user-images.githubusercontent.com/92404990/174571772-b41138d6-8a3f-4ab9-bf7b-7e1d77ec127f.png">
+
 
 # ダッシュボード(マイページを想定して作成した画面)
 ## サイドバー展開状態
