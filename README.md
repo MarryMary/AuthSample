@@ -6,6 +6,10 @@
 * Google Authenticatiorによる2段階認証（多段階認証）
   
 を実装しています。  
+
+## 見た目
+[こちら](https://github.com/MarryMary/AuthSample/blob/main/Views.md)
+
 ## GoogleでのSSO 
 今回はメールアドレス・パスワードでの認証を基準としているため、Googleアカウントを使ったログインの場合は、Googleのメールアドレスとユーザー名を使用した上で欠損した情報（パスワードやアカウント画像等）を追加で入力する方式にしています。  
 ## Google Authenticatiorによる2ファクター認証  
