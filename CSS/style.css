@@ -1,26 +1,78 @@
-.glass{
-    margin-top: 10px;
-    background:rgba(0, 187, 255, 0.323);
-}
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&display=swap');
 
-.profile{
-    text-align: center;
+
+.menus{
     margin: 10px;
     background-color: white;
     padding: 10px;
 }
 
-.menu{
-    margin: 10px;
-    background-color: white;
-    padding: 10px;
-}
-
-.menu a{
+.menus a{
     text-decoration: none;
     color: black;
 }
 
+.selector{
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 30px;
+}
+
 .selector:hover{
     opacity: 0.5;
+}
+
+.box-centering{
+    margin: auto;
+    width: 70%;
+}
+
+.content-card{
+    margin-top: 5%;
+    background: white;
+    border-radius: 30px;
+    padding: 3%;
+}
+
+.content-card img{
+    border-radius: 30px;
+}
+
+.text-centering{
+    text-align: center;
+}
+
+.profile-img-parent{
+    margin: auto;
+    width: 15%;
+    height: 15%;
+    text-align: center;
+}
+
+.progress{
+    color: gray;
+}
+
+.progress-text{
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.list-btn{
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
+.list-btn small{
+    color: lightgray;
+    text-align: center;
+}
+
+.list-btn:hover{
+    opacity: 0.5;
+}
+
+.non-radius img{
+    border-radius: 0!important;
 }

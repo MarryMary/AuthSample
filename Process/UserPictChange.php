@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
                         // SQLが正しく実行できた場合
                         if ($res) {
-                            header('Location: /AuthSample/mypage.php');
+                            header('Location: /AuthSample/MyPage/profilesetting.php');
                             // SQLが正しく実行できなかった場合
                         } else {
                             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');

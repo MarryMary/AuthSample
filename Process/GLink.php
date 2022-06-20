@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         // SQLが正しく実行できなかった場合
         if(!$res){
             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-            header('Location: /AuthSample/Change/username.php');
+            header('Location: /AuthSample/Change/gauthlink.php');
             // SQLが正しく実行できた場合
         }else{
             // データ取得

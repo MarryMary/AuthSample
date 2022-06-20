@@ -2,6 +2,10 @@
 /*
  * マイページ（仮、ログイン後）
  */
+
+header('Location: MyPage/home.php');
+exit;
+
 // 必要ファイルのインクルード
 include 'Tools/Session.php';
 include 'Tools/SQL.php';
@@ -11,7 +15,7 @@ SessionStarter();
 
 // ログインしていない、または2段階認証未実施の場合
 if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
-    header('Location: login.php');
+    header('Location: /AuthSample/login.php');
 }
 
 // ユーザー情報を検索(IsAuthがセッションにあってUserIdがセッションにない状況はありえない(ログイン時・ログアウト時にのみこれらの値が変更される))
