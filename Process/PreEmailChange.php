@@ -40,11 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // ユーザーテーブルにも仮ユーザーテーブルにもデータがない場合
             if(is_bool($mainstmt->fetch()) && is_bool($stmt->fetch())){
                 if(password_verify($_POST['password'], $data['pass'])){
+                    $id = SessionReader('UserId');
                     // 仮ユーザーテーブルにデータをインサート
-                    $stmt = $pdo->prepare("INSERT INTO PreUser (email, user_token, register_type) VALUES (:email, :user_token, :register_type)");
+                    $stmt = $pdo->prepare("INSERT INTO PreUser (email, user_token, register_type, affect_id) VALUES (:email, :user_token, :register_type, :affect_id)");
                     $stmt->bindParam(':email', $_POST['email'], PDO::PARAM_STR);
                     $stmt->bindParam(':user_token', $uuid, PDO::PARAM_STR);
                     $stmt->bindParam(':register_type', $type, PDO::PARAM_INT);
+                    $stmt->bindParam(':affect_id', $id, PDO::PARAM_INT);
                     $res = $stmt->execute();
 
                     // SQLが正しく実行できた場合

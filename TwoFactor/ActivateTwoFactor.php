@@ -32,12 +32,14 @@ if(SessionIsIn('IsAuth') && is_bool(SessionReader('IsAuth')) && SessionReader('I
                 $template = file_get_contents(dirname(__FILE__).'/../Template/TwoFactorEnable.html');
                 $template = str_replace('{{URL}}', $url, $template);
                 EmailSender($data['email'], '2段階認証有効化のご案内', $template);
-
+                
                 // 仮登録テーブルに登録タイプを3(2段階認証有効化)で登録
-                $stmt = $pdo->prepare("INSERT INTO PreUser (user_token, email, register_type) VALUES (:token, :email, :type)");
+                $id = SessionReader('UserId');
+                $stmt = $pdo->prepare("INSERT INTO PreUser (user_token, email, register_type, affect_id) VALUES (:token, :email, :type, :affect_id)");
                 $stmt->bindValue(':token', $uuid, PDO::PARAM_STR);
                 $stmt->bindValue(':email', $data['email'], PDO::PARAM_STR);
                 $stmt->bindValue(':type', 3, PDO::PARAM_INT);
+                $stmt->bindValue(':affect_id', $id, PDO::PARAM_INT);
                 $stmt->execute();
 
                 // セッションに２段階認証設定フラグと完了フラグを立てて送信完了画面に遷移

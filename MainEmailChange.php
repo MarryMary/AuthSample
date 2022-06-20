@@ -28,7 +28,7 @@ if(isset($_GET["token"])){
         //取得できた場合（条件一致が0件の場合はFalseになる）
         if(!is_bool($result)){
             $email = $result['email'];
-            $id = SessionReader('UserId');
+            $id = $result['affect_id'];
             $stmt = $pdo->prepare("UPDATE User SET email = :email WHERE id = :id");
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->bindParam(':id', $id, PDO::PARAM_STR);

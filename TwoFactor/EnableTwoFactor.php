@@ -49,8 +49,9 @@ if(!$res){
         $secret = $ga->createSecret();
         SessionInsert('token', $_GET['token']);
 
-        $userid = SessionReader('UserId');
         // ユーザーテーブルを更新して2段階認証を有効化、秘密鍵をインサート
+        $user = $data['affect_id'];
+        SessionInsert('UserId', $user);
         $stmt = $pdo->prepare("UPDATE User SET TwoFactorSecret = :secret, IsTwoFactor = 1 WHERE id = :id");
         $stmt->bindValue(":secret", $secret, PDO::PARAM_STR);
         $stmt->bindValue(":id", $userid, PDO::PARAM_STR);
