@@ -5,6 +5,7 @@
 // 必要ファイルのインクルード
 include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッションの開始
 SessionStarter();
@@ -40,16 +41,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $res = $stmt->execute();
 
             SessionInsert('registration', True);
-            header('Location: /AuthSample/regfinish.php');
+            header('Location: /'.$SERVICE_ROOT.'/Auth/regfinish.php');
         // SQLが正しく実行できなかった場合
         }else{
-            header('Location: /AuthSample/login.php');
+            header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
         }
     // 必要な値がセッションに入っていない場合
     }else{
-        header('Location: /AuthSample/login.php');
+        header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
     }
 // POST送信ではない場合
 }else{
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

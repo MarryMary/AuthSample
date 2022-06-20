@@ -3,8 +3,9 @@
  * アカウント復元確認画面
  */
 //必要ファイルのインクルード
-include 'Tools/Session.php';
-include 'Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Tools/Session.php';
+include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッションの開始
 SessionStarter();
@@ -24,8 +25,8 @@ if(SessionIsIn('Recover')){
     もし以前使用していたアカウントを復元したい場合は、復元ボタンを押して下さい。
 </p>
 <div style="text-align: center; margin-top: 10px;">
-    <button type="button" class="btn btn-primary" onclick="location.href='/AuthSample/Process/RecoverAccount.php?cancel=true'" style="width: 40%;">キャンセル</button>
-    <button type="button" class="btn btn-success" onclick="location.href='/AuthSample/Process/RecoverAccount.php'" style="width: 40%;">復元</button><br>
+    <button type="button" class="btn btn-primary" onclick="location.href='/{$SERVICE_ROOT}/Process/RecoverAccount.php?cancel=true'" style="width: 40%;">キャンセル</button>
+    <button type="button" class="btn btn-success" onclick="location.href='/{$SERVICE_ROOT}/Process/RecoverAccount.php'" style="width: 40%;">復元</button><br>
 </div>
 EOF;
 
@@ -40,8 +41,8 @@ EOF;
 EOF;
 
     // テンプレートファイル読み込み
-    include dirname(__FILE__).'/Template/BaseTemplate.php';
+    include dirname(__FILE__).'/../Template/BaseTemplate.php';
 }else{
     // メール送信後でなければログイン画面に推移
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

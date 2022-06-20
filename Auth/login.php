@@ -4,8 +4,9 @@
  */
 
 // 必要ファイルのインクルード
-include dirname(__FILE__).'/Tools/Session.php';
-include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Tools/Session.php';
+include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッション開始
 SessionStarter();
@@ -25,10 +26,10 @@ if(SessionIsIn('Recover') && SessionIsIn('UserId')){
     SessionUnset();
 // ログイン状態の場合はmypage.phpへ推移
 }elseif(SessionIsIn('IsAuth') && SessionReader('IsAuth')){
-    header("Location: mypage.php");
+    header("Location: /$SERVICE_ROOT/MyPage/home.php");
 //ログインはしているがIsAuthがFalse(2段階認証未実施)の場合はwhichTwoFactor.phpに遷移
 }elseif(SessionIsIn('IsAuth') && !SessionReader('IsAuth')){
-    header("Location: TwoFactor/whichTwoFactor.php");
+    header("Location: /$SERVICE_ROOT/TwoFactor/whichTwoFactor.php");
 }
 
 $title = 'Login';
@@ -43,7 +44,7 @@ $GAuthJS = '<script src="https://accounts.google.com/gsi/client" async defer></s
 
 // フォーム作成
 $form = <<<EOF
-<form action="Process/Auth.php" method="POST">
+<form action="/{$SERVICE_ROOT}/Process/Auth.php" method="POST">
     <input type='email' name='email' class="form-control" placeholder='メールアドレス' value="{$address}">
     <div class="form-check" style='margin-bottom: 3%;'>
         <input class="form-check-input" type="checkbox" value="SaveAddress" id="SaveAddress">
@@ -78,14 +79,14 @@ EOF;
 
 // オプションメニュー作成
 $option = <<<EOF
-<p>アカウントをお持ちではありませんか？<a href="register_pre.php">新規登録</a></p>
-<p>パスワードをお忘れですか？<a href="forget.php">パスワードのリセット</a></p>
+<p>アカウントをお持ちではありませんか？<a href="/{$SERVICE_ROOT}/register_pre.php">新規登録</a></p>
+<p>パスワードをお忘れですか？<a href="/{$SERVICE_ROOT}/forget.php">パスワードのリセット</a></p>
 EOF;
 
 
 //JavaScript指定
-$scriptTo = 'JavaScript/Login.js';
+$scriptTo = '/'.$SERVICE_ROOT.'/JavaScript/Login.js';
 $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
 // テンプレートファイルをインクルード
-include dirname(__FILE__).'/Template/BaseTemplate.php';
+include dirname(__FILE__).'/../Template/BaseTemplate.php';

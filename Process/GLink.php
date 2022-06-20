@@ -6,6 +6,7 @@
 include dirname(__FILE__).'/../vendor/autoload.php';
 include dirname(__FILE__) . '/../Tools/Session.php';
 include dirname(__FILE__) . '/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッション開始
 SessionStarter();
@@ -28,7 +29,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         // SQLが正しく実行できなかった場合
         if(!$res){
             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-            header('Location: /AuthSample/Change/gauthlink.php');
+            header('Location: /'.$SERVICE_ROOT.'/Change/gauthlink.php');
             // SQLが正しく実行できた場合
         }else{
             // データ取得
@@ -54,27 +55,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     // SQLが正しく実行できた場合
                     if($res){
                         SessionInsert('err', 'Googleアカウントでの関連付けを行いました。次回ログイン時からGoogleでログイン機能をご利用頂けます。');
-                        header('Location: /AuthSample/Change/gauthlink.php');
+                        header('Location: /'.$SERVICE_ROOT.'/Change/gauthlink.php');
                         // SQLが正しく実行できなかった場合
                     }else{
                         SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-                        header('Location: /AuthSample/Change/gauthlink.php');
+                        header('Location: /'.$SERVICE_ROOT.'/Change/gauthlink.php');
                     }
                     // パスワードが間違っている場合
                 }else{
                     SessionInsert('err', '不正な値が挿入されました。もう一度お試し下さい。');
-                    header('Location: /AuthSample/Change/gauthlink.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Change/gauthlink.php');
                 }
                 // データが存在しない場合
             }else{
-                header('Location: /AuthSample/Process/Logout.php');
+                header('Location: /'.$SERVICE_ROOT.'/Process/Logout.php');
             }
         }
     }else{
         SessionInsert('err', '不正な方法でアクセスされました。もう一度お試し下さい。');
-        header('Location: /AuthSample/Change/gauthlink.php');
+        header('Location: /'.$SERVICE_ROOT.'/Change/gauthlink.php');
     }
 // POST送信ではない場合
 }else{
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

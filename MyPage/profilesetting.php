@@ -5,13 +5,14 @@
 // 必要ファイルのインクルード
 include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 //セッション開始
 SessionStarter();
 
 // ログインしていない、または2段階認証未実施の場合
 if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }
 
 // ユーザー情報を検索(IsAuthがセッションにあってUserIdがセッションにない状況はありえない(ログイン時・ログアウト時にのみこれらの値が変更される))
@@ -42,44 +43,44 @@ $content = <<< EOF
                     <h2>プロフィール設定</h2>
                     <hr>
                 </div>
-                <a href="/AuthSample/Change/username.php">
+                <a href="/{$SERVICE_ROOT}/Change/username.php">
                     <div class="selector">
                         <p>ユーザー名の変更</p>
                         <small>ユーザー名を変更します。</small>
                     </div>
                 </a>
-                <a href="/AuthSample/Change/userpict.php">
+                <a href="/{$SERVICE_ROOT}/Change/userpict.php">
                     <div class="selector">
                         <p>ユーザー画像の変更</p>
                         <small>ユーザー画像を変更します。</small>
                     </div>
                 </a>
-                <a href="/AuthSample/Change/email.php">
+                <a href="/{$SERVICE_ROOT}/Change/email.php">
                     <div class="selector">
                         <p>メールアドレスの変更</p>
                         <small>現在のメールアドレスを変更します。</small>
                     </div>
                 </a>
-                <a href="/AuthSample/Change/password.php">
+                <a href="/{$SERVICE_ROOT}/Change/password.php">
                     <div class="selector">
                         <p>パスワードの変更</p>
                         <small>ログインパスワードを変更します。</small>
                     </div>
                 </a>
-                <a href="/AuthSample/Change/gauthlink.php">
+                <a href="/{$SERVICE_ROOT}/Change/gauthlink.php">
                     <div class="selector">
                         <p>Googleアカウント連携</p>
                         <small>お使いのアカウントにGoogleアカウントでのログイン機能を追加します。</small>
                     </div>
                 </a>
-                <a href="/AuthSample/TwoFactorAuthorize.php">
+                <a href="/{$SERVICE_ROOT}/TwoFactorAuthorize.php">
                     <div class="selector">
                         <p>2段階認証の設定</p>
                         <small>Google Authenticatorアプリを使用してログイン時に2段階認証を行えるようにします。</small>
                     </div>
                 </a>
                 <div>
-                    <a href="/AuthSample/Change/del.php" style="color: red;">
+                    <a href="/{$SERVICE_ROOT}/Change/del.php" style="color: red;">
                         <div class="selector">
                             <p>アカウントの削除</p>
                             <small>アカウントを削除します。</small>

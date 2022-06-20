@@ -1,3 +1,5 @@
+use Auth;
+
 CREATE TABLE PreUser(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_token VARCHAR(255) NOT NULL,

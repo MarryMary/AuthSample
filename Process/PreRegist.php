@@ -50,30 +50,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     // 登録完了フラグを立てて送信完了画面に遷移
                     SessionInsert('finished', True);
-                    header('Location: /AuthSample/presend.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/presend.php');
                 // SQLが正しく実行できなかった場合
                 } else {
                     SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-                    header('Location: /AuthSample/register_pre.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/register_pre.php');
                 }
                 // PDO接続解除
                 $pdo = null;
             // ユーザーテーブルまたは仮ユーザーテーブルにデータが存在していた場合
             }else{
                 SessionInsert('err', 'そのメールアドレスは既に登録されています。');
-                header('Location: /AuthSample/register_pre.php');
+                header('Location: /'.$SERVICE_ROOT.'/Auth/register_pre.php');
             }
         // SQLが正しく実行できなかった場合
         }else{
             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-            header('Location: /AuthSample/register_pre.php');
+            header('Location: /'.$SERVICE_ROOT.'/Auth/register_pre.php');
         }
     // メールアドレスが入力されていなかった場合
     } else {
         $_SESSION['err'] = 'メールアドレスが入力されていません。';
-        header('Location: /AuthSample/register_pre.php');
+        header('Location: /'.$SERVICE_ROOT.'/Auth/register_pre.php');
     }
 // POST送信ではない場合
 } else {
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

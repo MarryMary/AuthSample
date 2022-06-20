@@ -5,13 +5,14 @@
 // 必要ファイルのインクルード
 include dirname(__FILE__) . '/../Tools/Session.php';
 include dirname(__FILE__) . '/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッション開始
 SessionStarter();
 
 // ログイン状態でない場合はログイン画面へ
 if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }
 
 // IDを基にUserテーブルからデータを取得
@@ -23,7 +24,7 @@ $res = $stmt->execute();
 // SQLが正しく実行できなかった場合
 if (!$res) {
     SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-    header('Location: /AuthSample/Change/username.php');
+    header('Location: /'.$SERVICE_ROOT.'/Change/username.php');
     // SQLが正しく実行できた場合
 } else {
     // データ取得
@@ -39,13 +40,13 @@ if (!$res) {
 
         // SQLが正しく実行できた場合
         if ($res) {
-            header('Location: /AuthSample/mypage.php');
+            header('Location: /'.$SERVICE_ROOT.'/MyPage/home.php');
             // SQLが正しく実行できなかった場合
         } else {
             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-            header('Location: /AuthSample/Change/gauthlink.php');
+            header('Location: /'.$SERVICE_ROOT.'/Change/gauthlink.php');
         }
     } else {
-        header('Location: /AuthSample/Process/Logout.php');
+        header('Location: /'.$SERVICE_ROOT.'/Process/Logout.php');
     }
 }

@@ -5,13 +5,14 @@
 // 必要ファイルのインクルード
 include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 //セッション開始
 SessionStarter();
 
 // ログインしていない、または2段階認証未実施の場合
 if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }
 
 // ユーザー情報を検索(IsAuthがセッションにあってUserIdがセッションにない状況はありえない(ログイン時・ログアウト時にのみこれらの値が変更される))
@@ -58,7 +59,7 @@ $content = <<< EOF
         </div>
         <hr>
         <div class="menus">
-            <a href="Change/username.php">
+            <a href="/{$SERVICE_ROOT}/Change/username.php">
                 <div class="selector">
                     <p style="font-size: 20px;">あのカレー食えねぇじゃねぇかよ</p>
                     <small>平均解答時間：10分 問題種別：数学</small>

@@ -45,21 +45,21 @@ if(SessionIsIn('IsAuth') && is_bool(SessionReader('IsAuth')) && SessionReader('I
                 // セッションに２段階認証設定フラグと完了フラグを立てて送信完了画面に遷移
                 SessionInsert('finished', True);
                 SessionInsert('twofactor', True);
-                header("Location: /AuthSample/presend.php");
+                header("Location: /$SERVICE_ROOT/Auth/presend.php");
             // 2段階認証が既に設定済みの場合
             }else{
-                header("Location: /AuthSample/mypage.php");
+                header("Location: /$SERVICE_ROOT/MyPage/profilesetting.php");
             }
         // データが存在しなかった場合
         }else{
-            header("Location: /AuthSample/login.php");
+            header("Location: /$SERVICE_ROOT/Auth/login.php");
         }
     // SQLが正しく実行できなかった場合
     }else{
         $_SESSION["err"] = "問題が発生しました。";
-        header("Location: /AuthSample/TwoFactorAuthorize.php");
+        header("Location: /$SERVICE_ROOT/TwoFactor/TwoFactorAuthorize.php");
     }
 // ログイン状態ではない場合
 }else{
-    header("Location: /AuthSample/login.php");
+    header("Location: /$SERVICE_ROOT/Auth/login.php");
 }

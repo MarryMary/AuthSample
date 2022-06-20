@@ -6,6 +6,7 @@
 //必要ファイルのインクルード
 include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 //セッション開始
 SessionStarter();
@@ -45,37 +46,37 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         SessionInsert('NeedTwoFactor', True);
 
                         // 2段階認証のメニューを表示
-                        header('Location: /AuthSample/TwoFactor/whichTwoFactor.php');
+                        header('Location: /'.$SERVICE_ROOT.'/TwoFactor/whichTwoFactor.php');
                     }else{
                         // 2段階認証が有効化されていない場合はマイページにリダイレクト
                         SessionInsert('IsAuth', True);
                         SessionInsert('UserId', $data['id']);
-                        header('Location: /AuthSample/mypage.php');
+                        header('Location: /'.$SERVICE_ROOT.'/MyPage/home.php');
                     }
                 }else{
                     // 論理削除状態の場合
                     SessionInsert('Recover', True);
                     SessionInsert('UserId', $data['id']); 
-                    header('Location: /AuthSample/RecoverAccount.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/RecoverAccount.php');
                 }
             }else{
                 // ユーザー情報が見つからなかった場合
                 SessionInsert('err', 'メールアドレスまたはパスワードが間違っています。');
-                header('Location: /AuthSample/login.php');
+                header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
             }
         }else{
             // SQLが正しく実行できなかった場合
             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-            header('Location: /AuthSample/login.php');
+            header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
         }
         // PDO接続解除
         $pdo = null;
     }else{
         // メールアドレスまたはパスワードが入力されていなかった場合
         SessionInsert('err', 'メールアドレスまたはパスワードが入力されていません。');
-        header('Location: /AuthSample/login.php');
+        header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
     }
 }else{
     // POST送信でなかった場合
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

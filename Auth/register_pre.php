@@ -3,8 +3,9 @@
  * 新規登録(仮新規登録)画面
  */
 // 必要ファイルのインクルード
-include 'Tools/Session.php';
-include 'Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Tools/Session.php';
+include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッション開始
 SessionStarter();
@@ -21,7 +22,7 @@ if(SessionIsIn('err')){
 
 //フォーム作成
 $form = <<<EOF
-<form action="Process/PreRegist.php" method="POST">
+<form action="/{$SERVICE_ROOT}/Process/PreRegist.php" method="POST">
     <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;'>
     <div style="text-align: center;">
         <button type='submit' class='btn btn-primary' style="width: 80%;">登録</button>
@@ -33,9 +34,9 @@ EOF;
 
 // オプションメニュー表示
 $option = <<<EOF
-<p>アカウントをお持ちですか？<a href="login.php">ログイン</a></p>
-<p>パスワードをお忘れですか？<a href="forget.php">パスワードのリセット</a></p>
+<p>アカウントをお持ちですか？<a href="/{$SERVICE_ROOT}/Auth/login.php">ログイン</a></p>
+<p>パスワードをお忘れですか？<a href="/{$SERVICE_ROOT}/Auth/forget.php">パスワードのリセット</a></p>
 EOF;
 
 //テンプレートファイルの読み込み
-include dirname(__FILE__).'/Template/BaseTemplate.php';
+include dirname(__FILE__).'/../Template/BaseTemplate.php';

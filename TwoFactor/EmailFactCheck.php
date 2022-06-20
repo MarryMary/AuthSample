@@ -16,13 +16,13 @@ if($_SERVER["REQUEST_METHOD"] === "POST"){
     if(SessionIsIn('2Factor-Token') && isset($_POST["token"]) && trim(SessionReader('2Factor-Token')) == trim($_POST["token"])){
         SessionInsert('IsAuth', True);
         SessionUnset('2Factor-Token');
-        header("Location: /AuthSample/mypage.php");
+        header("Location: /$SERVICE_ROOT/MyPage/home.php");
     // もしコードが送信されていないか2段階認証トークンが存在しない場合
     }else{
         SessionInsert('err', 'コードが異なります。');
-        header("Location: /AuthSample/TwoFactor/MailFactorSend.php");
+        header("Location: /$SERVICE_ROOT/TwoFactor/MailFactorSend.php");
     }
 // POST送信でなければ
 }else{
-    header("Location: /$SERVICE_ROOT/login.php");
+    header("Location: /$SERVICE_ROOT/Auth/login.php");
 }

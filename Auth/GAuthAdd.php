@@ -4,8 +4,9 @@
  */
 
 //必要ファイルのインクルード
-include dirname(__FILE__).'/Tools/Session.php';
-include dirname(__FILE__).'/Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Tools/Session.php';
+include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッション開始(IsInGetTools.php内関数)
 SessionStarter();
@@ -42,7 +43,7 @@ EOF;
 
     // フォーム作成
     $form = <<<EOF
-    <form action="Process/GCheck.php" method="POST" enctype="multipart/form-data">
+    <form action="/{$SERVICE_ROOT}/Process/GCheck.php" method="POST" enctype="multipart/form-data">
         <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;' value='{$email}' disabled>
         <input type='text' name='username' class="form-control" placeholder='ユーザー名' style='margin-bottom: 3%;' value='{$username}' disabled>
         <div class="mb-3">
@@ -65,14 +66,14 @@ EOF;
     EOF;
 
     // JavaScriptファイルを指定
-    $scriptTo = 'JavaScript/Register.js';
+    $scriptTo = '/'.$SERVICE_ROOT.'/JavaScript/Register.js';
     //cropper.js関連のJavaScriptファイルを指定
     $JS = '<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cropper/1.0.1/jquery-cropper.js" type="text/javascript"></script>';
 
     // テンプレートファイルをインクルード
-    include dirname(__FILE__).'/Template/BaseTemplate.php';
+    include dirname(__FILE__).'/../Template/BaseTemplate.php';
 }else{
     // もし上の条件に反していた場合はログイン画面に遷移して終了
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

@@ -9,6 +9,7 @@ use Google\Service\Fitness\Session;
 include dirname(__FILE__).'/../vendor/autoload.php';
 include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 SessionStarter();
 // POST送信されており、Googleのトークンがあるかどうか確認
@@ -66,20 +67,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_token'])){
                                 SessionInsert('IsAuth', False);
                                 SessionInsert('UserId', $data['id']);
 
-                                header('Location: /AuthSample/TwoFactor/whichTwoFactor.php');
+                                header('Location: /'.$SERVICE_ROOT.'/TwoFactor/whichTwoFactor.php');
 
                             // 2段階認証が無効になっている場合
                             }else {
                                 // ログイン状態にしてマイページへ
                                 SessionInsert('IsAuth', True);
                                 SessionInsert('UserId', $data['id']);
-                                header('Location: /AuthSample/mypage.php');
+                                header('Location: /'.$SERVICE_ROOT.'/MyPage/home.php');
                             }
                         }else{
                             // 論理削除状態の場合
                             SessionInsert('Recover', True);
                             SessionInsert('UserId', $data['id']); 
-                            header('Location: /AuthSample/RecoverAccount.php');
+                            header('Location: /'.$SERVICE_ROOT.'/Auth/RecoverAccount.php');
                         }
                     }else{
                         // メールアドレスもGoogleアカウントと一致するものが無かった場合はGoogleアカウントのメールアドレス、識別ID、ニックネームを使用して新規登録するページに遷移
@@ -87,7 +88,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_token'])){
                         SessionInsert('userid', $payload['sub']);
                         SessionInsert('username', $payload['name']);
 
-                        header('Location: /AuthSample/GAuthAdd.php');
+                        header('Location: /'.$SERVICE_ROOT.'/Auth/GAuthAdd.php');
                     }
                 }
             }else{
@@ -101,35 +102,35 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_token'])){
                         SessionInsert('IsAuth', False);
                         SessionInsert('UserId', $data['id']);
 
-                        header('Location: /AuthSample/TwoFactor/whichTwoFactor.php');
+                        header('Location: /'.$SERVICE_ROOT.'/TwoFactor/whichTwoFactor.php');
 
                         // 2段階認証が無効になっている場合
                     }else {
                         // ログイン状態にしてマイページへ
                         SessionInsert('IsAuth', True);
                         SessionInsert('UserId', $data['id']);
-                        header('Location: /AuthSample/mypage.php');
+                        header('Location: /'.$SERVICE_ROOT.'/MyPage/home.php');
                     }
                 }else{
                     // 論理削除状態の場合
                     SessionInsert('Recover', True);
                     SessionInsert('UserId', $data['id']); 
-                    header('Location: /AuthSample/RecoverAccount.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/RecoverAccount.php');
                 }
             }
         }else{
             // SQLが正しく実行できなかった場合
             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-            header('Location: /AuthSample/login.php');
+            header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
         }
         // PDO接続解除
         $pdo = null;
     }else{
         // Googleとの認証が上手くいかなかった場合
         SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-        header('Location: /AuthSample/login.php');
+        header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
     }
 }else{
     // POST送信でなかった場合
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

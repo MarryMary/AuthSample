@@ -41,28 +41,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($res) {
                     // 登録完了フラグを立てて削除完了画面へ遷移
                     SessionInsert('finished', True);
-                    header('Location: /AuthSample/thanks.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/thanks.php');
                 // SQLが正しく実行できなかった場合
                 } else {
                     SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-                    header('Location: /AuthSample/Change/del.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Change/del.php');
                 }
                 // PDO接続解除
                 $pdo = null;
             }else{
                 if(is_bool($data)){
-                    var_dump($data);
-                    exit;
-                    header('Location: /AuthSample/Process/Logout.php'); 
+                    header('Location: /'.$SERVICE_ROOT.'/Process/Logout.php');
                 }else{
                     SessionInsert('err', 'パスワードが間違っています。');
-                    header('Location: /AuthSample/Change/del.php'); 
+                    header('Location: /'.$SERVICE_ROOT.'/Change/del.php');
                 }
             }
         }else{
             // SQLが正しく実行できなかった場合
             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-            header('Location: /AuthSample/Change/del.php');
+            header('Location: /'.$SERVICE_ROOT.'/Change/del.php');
         }
     // パスワードまたは確認チェックボックスにチェックが入っていなかった場合
     } else {
@@ -71,6 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }else{
             SessionInsert('err', 'パスワードが入力されていません。');
         }
-        header('Location: /AuthSample/Change/del.php');
+        header('Location: /'.$SERVICE_ROOT.'/Change/del.php');
     }
 }

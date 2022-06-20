@@ -6,6 +6,7 @@
 //必要ファイルのインクルード
 include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 //セッション開始
 SessionStarter();
@@ -38,25 +39,25 @@ if(SessionIsIn('Recover') && SessionIsIn('UserId')){
                 $res = $stmt->execute();
 
                 SessionInsert('err', 'アカウントが復元されました。再度ログインして下さい。');
-                header('Location: /AuthSample/login.php');
+                header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
             // ユーザーが論理削除ではないか、ユーザーが見つからなかった場合    
             }else{
                 SessionUnset();
-                header('Location: /AuthSample/login.php');
+                header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
             }
         }else{
             // SQLが正しく実行できなかった場合
             SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-            header('Location: /AuthSample/login.php');
+            header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
         }
         // PDO接続解除
         $pdo = null;
     // キャンセルボタンが押された場合
     }else{
         SessionUnset();
-        header('Location: /AuthSample/login.php');
+        header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
     }
 }else{
     SessionUnset();
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

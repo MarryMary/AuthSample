@@ -1,3 +1,4 @@
 <?php
+include 'Template/ServiceData.php';
 // ここにアクセスされた場合はlogin.phpに遷移します。
-header('Location: /AuthSample/login.php');
+header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');

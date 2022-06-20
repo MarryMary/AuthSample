@@ -15,7 +15,7 @@ SessionStarter();
 
 // トークンがGET送信されていない場合
 if(!isset($_GET["token"])){
-    header("location: /$SERVICE_ROOT/mypage.php");
+    header("location: /$SERVICE_ROOT/MyPage/home.php");
 }
 
 // 仮ユーザーテーブルからトークンを基にデータを検索
@@ -32,7 +32,7 @@ if(isset($_GET["cant_read"])){
 
 // もしSQLが正しく実行できなかった場合
 if(!$res){
-    header("Location: /AuthSample/Process/Logout.php");
+    header("Location: /$SERVICE_ROOT/Process/Logout.php");
 // もしSQLが正しく実行できた場合
 }else{
     // データを取得
@@ -93,7 +93,7 @@ if(!$res){
     問題が発生しました。
 </p>
 <div style="text-align: center;">
-    <button type="button" class="btn btn-primary" onclick="location.href='/AuthSample/TwoFactorAuthorize.php'" style="width: 90%;">設定画面へ</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='/{$SERVICE_ROOT}/TwoFactor/TwoFactorAuthorize.php'" style="width: 90%;">設定画面へ</button>
 </div>
 EOF;
         // 秘密鍵を直接表示する場合のテンプレート
@@ -134,7 +134,6 @@ EOF;
 <form action="GAppEnable.php" method="POST">
 <input type='text' name='token' class="form-control" placeholder='2段階認証コード' style='margin-bottom: 3%;' maxlength="6">
 <div style="text-align: center;">
-<button type='button' class='btn btn-primary' onclick="history.back()" style="width: 40%;">今は設定しない</button>
 <button type='submit' class='btn btn-success' style="width: 40%;">送信</button>
 </div>
 </form>
@@ -142,7 +141,7 @@ EOF;
         }
 
 
-        $scriptTo = 'JavaScript/Login.js';
+        $scriptTo = '/'.$SERVICE_ROOT.'/JavaScript/Login.js';
         $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
         include dirname(__FILE__).'/../Template/BaseTemplate.php';

@@ -14,7 +14,7 @@ SessionStarter();
 
 // ログインしていない場合
 if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
-    header('Location: /$SERVICE_ROOT/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }
 
 // 無効化フラグをインサート
@@ -35,12 +35,12 @@ $form = <<<EOF
 次回ログインから2段階認証が不要になります。<br>
 </p>
 <div style="text-align: center;">
-    <button type="button" class="btn btn-primary" onclick="location.href='/AuthSample/TwoFactorAuthorize.php'" style="width: 90%;">戻る</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='/{$SERVICE_ROOT}/TwoFactor/TwoFactorAuthorize.php'" style="width: 90%;">戻る</button>
 </div>
 EOF;
 
 
-$scriptTo = 'JavaScript/Login.js';
+$scriptTo = '/'.$SERVICE_ROOT.'/JavaScript/Login.js';
 $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
 include dirname(__FILE__).'/../Template/BaseTemplate.php';

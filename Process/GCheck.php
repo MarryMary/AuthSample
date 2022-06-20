@@ -6,6 +6,7 @@
 include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/Uploader.php';
 include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッション開始
 SessionStarter();
@@ -24,28 +25,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 if(isset($file)){
                     // ファイル名をセッションに代入し、最終チェック画面に遷移
                     SessionInsert('filename', $file);
-                    header('Location: /AuthSample/GAuthAddCheck.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/GAuthAddCheck.php');
                 // ファイルのアップロードに失敗している場合
                 }else{
                     // ファイルのアップロードに失敗した旨をセッションに代入して登録画面に戻す
                     SessionInsert('err', "ファイルのアップロードに失敗しました。");
-                    header('Location: /AuthSample/GAuthAdd.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/GAuthAdd.php');
                 }
             // メールアドレスとパスワードがバリデーションで引っかかった場合
             }else{
                 SessionInsert('err', 'メールアドレスまたはパスワードが条件に一致しません。');
-                header('Location: /AuthSample/GAuthAdd.php');
+                header('Location: /'.$SERVICE_ROOT.'/Auth/GAuthAdd.php');
             }
         // パスワード1と2が合わない場合
         }else{
             SessionInsert('err', 'パスワードが一致しません。');
-            header('Location: /AuthSample/GAuthAdd.php');
+            header('Location: /'.$SERVICE_ROOT.'/Auth/GAuthAdd.php');
         }
      // そもそも入力されていない場合
     }else{
         SessionInsert('err', 'メールアドレスまたはパスワードが入力されていません。');
-        header('Location: /AuthSample/GAuthAdd.php');
+        header('Location: /'.$SERVICE_ROOT.'/Auth/GAuthAdd.php');
     }
 }else{
-    header('Location: /AuthSample/GAuthAdd.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/GAuthAdd.php');
 }

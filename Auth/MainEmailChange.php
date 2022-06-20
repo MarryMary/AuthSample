@@ -3,9 +3,10 @@
  * 新規登録の本登録（メールアドレスの有効性が確認できた場合）
  */
 // 必要ファイルのインクルード
-include 'Tools/Session.php';
-include 'Tools/ValidateAndSecure.php';
-include 'Tools/SQL.php';
+include dirname(__FILE__).'/../Tools/Session.php';
+include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Tools/SQL.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッション開始
 SessionStarter();
@@ -42,7 +43,7 @@ if(isset($_GET["token"])){
                 $res = $stmt->execute();
             // SQLが正しく実行できなかった場合
             } else {
-                header('Location: /AuthSample/login.php');
+                header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
             }
 
 
@@ -64,21 +65,21 @@ if(isset($_GET["token"])){
     メールアドレスが変わってもGoogleでのシングルサインオンには影響がありませんのでご安心下さい。
 </p>
 <div style="text-align:center;">
-    <button type="button" class="btn btn-primary" onclick="location.href='/AuthSample/index.php'" style="width: 90%;">ホームへ戻る</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='/{$SERVICE_ROOT}/index.php'" style="width: 90%;">ホームへ戻る</button>
 </div>
 
 EOF;
             // テンプレートファイルをインクルード
-            include dirname(__FILE__).'/Template/BaseTemplate.php';
+            include dirname(__FILE__).'/../Template/BaseTemplate.php';
         }else{
             //データベースに情報がなかった場合
-            header('Location: /AuthSample/login.php');
+            header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
         }
     }else{
         // 正常にデータベースへのSQLが実行できなかった場合
-        header('Location: /AuthSample/login.php');
+        header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
     }
 }else{
     //トークンが送信されていなかった場合
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

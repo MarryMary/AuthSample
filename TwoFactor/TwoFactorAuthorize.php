@@ -13,7 +13,7 @@ SessionStarter();
 
 // もしもログインしていないか2段階認証未実施の場合はログイン画面に遷移
 if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
-    header('Location: login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }
 
 // ユーザー情報検索
@@ -27,7 +27,7 @@ if($result){
     $get = $stmt->fetch();
 }else{
     // なければマイページに遷移
-    header("Location: mypage.php");
+    header("Location: /'.$SERVICE_ROOT.'/MyPage/home.php");
 }
 
 
@@ -51,7 +51,7 @@ SessionStarter();
 
 // もしもログインしていないか2段階認証未実施の場合はログイン画面に遷移
 if(!SessionIsIn('IsAuth') || is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
-    header('Location: login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }
 
 // ユーザー情報検索
@@ -64,7 +64,7 @@ if($result){
     $get = $stmt->fetch();
 }else{
     // なければマイページに遷移
-    header("Location: MyPage/profilesetting.php");
+    header("Location: /$SERVICE_ROOT/MyPage/profilesetting.php");
 }
 
 $name = $get['user_name'];
@@ -79,7 +79,7 @@ if($get['IsTwoFactor'] == 0){
     以下からダウンロードして下さい。
 </p>
 <a href="https://apps.apple.com/us/app/google-authenticator/id388497605?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1284940800&h=7fc6b39acc8ae5a42ad4b87ff8c7f88d" alt="Download on the App Store" style="border-radius: 13px; width: 230px; height: 83px;"></a>
-<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="Resources/google-play-badge.png" alt="Download on the Google Play Store" style="width: 250px; height: 100px;"></a>
+<a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="/{$SERVICE_ROOT}/Resources/google-play-badge.png" alt="Download on the Google Play Store" style="width: 250px; height: 100px;"></a>
 <p>
     2段階認証でのログイン不能を防ぐため、以下のメールアドレスの有効性を確認します。<br>
     ボタンを押すとメールが送信され、有効性が確認できれば有効化されます。
@@ -88,8 +88,8 @@ if($get['IsTwoFactor'] == 0){
         <label for="EmailCheck" class="form-label">有効化メールアドレス</label>
         <input type="email" class="form-control" id="EmailCheck" style="text-align: center;" value="{$get['email']}" disabled>
     </div>
-    <button type="button" class="btn btn-primary" style="width: 40%;margin-top: 10px;" onclick="location.href='mypage.php'">キャンセル</button>
-    <button type="button" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;" onclick="location.href='TwoFactor/ActivateTwoFactor.php'">メールアドレスを確認</button>
+    <button type="button" class="btn btn-primary" style="width: 40%;margin-top: 10px;" onclick="location.href='/{$SERVICE_ROOT}/MyPage/profilesetting.php'">キャンセル</button>
+    <button type="button" class="btn btn-success" style="width: 40%;margin-top: 10px; margin-left: 10px;" onclick="location.href='ActivateTwoFactor.php'">メールアドレスを確認</button>
 EOF;
 
 }else{
@@ -105,7 +105,7 @@ EOF;
 <p>
     また、2段階認証を無効化する場合は以下のボタンを押します。
 </p>
-<button type="button" class="btn btn-danger" style="width: 90%;margin-top: 10px;" onclick="location.href='TwoFactor/Disable.php'">2段階認証の無効化</button>
+<button type="button" class="btn btn-danger" style="width: 90%;margin-top: 10px;" onclick="location.href='Disable.php'">2段階認証の無効化</button>
 <br>
 </div>
 EOF;
@@ -115,7 +115,7 @@ $content = <<<EOF
 <div class="box-centering bootstrap">
     <div class="content-card" style="margin-top: 30px;">
         <div class="menu">
-        <button type="button" class="btn btn-primary" style="width: 40%;margin-top: 10px;" onclick="location.href='/AuthSample/MyPage/profilesetting.php'">＜＜ホームに戻る</button>
+        <button type="button" class="btn btn-primary" style="width: 40%;margin-top: 10px;" onclick="location.href='/{$SERVICE_ROOT}/MyPage/profilesetting.php'">＜＜ホームに戻る</button>
         <br>
         <div style="text-align: center">
             <h1>2段階認証の追加</h1>

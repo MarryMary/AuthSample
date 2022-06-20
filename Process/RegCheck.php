@@ -6,6 +6,7 @@
 include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/Uploader.php';
 include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッションの開始
 SessionStarter();
@@ -26,28 +27,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 if(isset($file)){
                     SessionInsert('filename', $file);
                     // 最終確認画面に遷移
-                    header('Location: /AuthSample/RegCheck.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/RegCheck.php');
                 // ファイルのアップロードに失敗した場合
                 }else{
                     SessionInsert('err', 'ファイルのアップロードに失敗しました。');
-                    header('Location: /AuthSample/MainRegistration.php?token='.SessionReader('token'));
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/MainRegistration.php?token='.SessionReader('token'));
                 }
             // バリデーションに不合格だった場合
             }else{
                 SessionInsert('err', 'メールアドレスまたはパスワード、ユーザー名のいずれかが条件に一致しません。');
-                header('Location: /AuthSample/MainRegistration.php?token='.SessionReader('token'));
+                header('Location: /'.$SERVICE_ROOT.'/Auth/MainRegistration.php?token='.SessionReader('token'));
             }
         // password1と2が異なる場合
         }else{
             SessionInsert('err', 'パスワードが一致しません。');
-            header('Location: /AuthSample/MainRegistration.php?token='.SessionReader('token'));
+            header('Location: /'.$SERVICE_ROOT.'/Auth/MainRegistration.php?token='.SessionReader('token'));
         }
     // メールアドレスとパスワード、ユーザー名のいずれかが入力されていなかった場合
     }else{
         SessionInsert('err', 'メールアドレスまたはパスワード、ユーザー名のいずれかが入力されていません。');
-        header('Location: /AuthSample/MainRegistration.php?token='.SessionReader('token'));
+        header('Location: /'.$SERVICE_ROOT.'/Auth/MainRegistration.php?token='.SessionReader('token'));
     }
 //POST送信ではない場合
 }else{
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

@@ -14,7 +14,7 @@ SessionStarter();
 
 // ログイン状態であるか、ログインしていない場合
 if(!SessionIsIn('IsAuth') || !SessionIsIn('NeedTwoFactor') || SessionIsIn('IsAuth') && is_bool(SessionReader('IsAuth')) && Sessionreader('IsAuth')){
-    header("location: /$SERVICE_ROOT/mypage.php");
+    header("location: /$SERVICE_ROOT/MyPage/home.php");
 // 2段階認証が必要な場合
 }else{
 
@@ -39,7 +39,7 @@ if(!SessionIsIn('IsAuth') || !SessionIsIn('NeedTwoFactor') || SessionIsIn('IsAut
 EOF;
 
 
-    $scriptTo = 'JavaScript/Login.js';
+    $scriptTo = '/'.$SERVICE_ROOT.'/JavaScript/Login.js';
     $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
     include dirname(__FILE__).'/../Template/BaseTemplate.php';

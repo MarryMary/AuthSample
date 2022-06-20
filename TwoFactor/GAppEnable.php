@@ -15,7 +15,7 @@ SessionStarter();
 
 // ログイン状態でない場合
 if(!SessionIsIn('IsAuth') || SessionIsIn('IsAuth') && is_bool(SessionReader('IsAuth')) && !SessionReader('IsAuth')){
-    header("location: /$SERVICE_ROOT/mypage.php");
+    header("location: /$SERVICE_ROOT/MyPage/home.php");
 }
 
 // ユーザーテーブルをidから検索
@@ -71,17 +71,17 @@ if(!$res){
 <p>
     全ての設定が完了しました。<br>
     次回認証時から2段階認証が有効化されます。<br>
-    <button type="button" class="btn btn-primary" onclick="location.href='/AuthSample/mypage.php'" style="width: 90%;">ホームへ</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='/{$SERVICE_ROOT}/MyPage/home.php'" style="width: 90%;">ホームへ</button>
 </p>
 EOF;
 
-            $scriptTo = 'JavaScript/Login.js';
+            $scriptTo = '/'.$SERVICE_ROOT.'/JavaScript/Login.js';
             $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
             include dirname(__FILE__).'/../Template/BaseTemplate.php';
         }else{
             SessionInsert('err', 'コードが異なります');
-            header("Location: /AuthSample/TwoFactor/EnableTwoFactor.php?token=".$_SESSION["token"]);
+            header("Location: /$SERVICE_ROOT/TwoFactor/EnableTwoFactor.php?token=".$_SESSION["token"]);
         }
     }
 }

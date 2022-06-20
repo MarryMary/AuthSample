@@ -13,7 +13,7 @@ SessionStarter();
 
 // 既にログイン状態であるかログインすらしていない場合
 if(!SessionIsIn('IsAuth') || !SessionIsIn('NeedTwoFactor') || SessionIsIn('IsAuth') && is_bool(SessionReader('IsAuth')) && SessionReader('IsAuth')){
-    header("location: /$SERVICE_ROOT/mypage.php");
+    header("location: /$SERVICE_ROOT/MyPage/home.php");
 }
 
 // ユーザー情報をidから検索
@@ -54,7 +54,7 @@ if(!$res){
             SessionInsert('IsAuth', True);
             SessionUnset('2Factor-Token');
             SessionUnset('2Factor-Token');
-            header("Location: /$SERVICE_ROOT/mypage.php");
+            header("Location: /$SERVICE_ROOT/MyPage/home.php");
         }else{
             SessionInsert('err', 'コードが異なります');
             header("Location: /$SERVICE_ROOT/TwoFactor/GoogleAuthenticator.php");

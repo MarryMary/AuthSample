@@ -3,8 +3,9 @@
  * アカウント削除完了画面
  */
 //必要ファイルのインクルード
-include 'Tools/Session.php';
-include 'Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Tools/Session.php';
+include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッションの開始
 SessionStarter();
@@ -26,13 +27,13 @@ if(SessionIsIn('finished')){
     また、本日の削除から30日以内に再ログインをして頂くと、アカウントを復旧して再度御利用頂くことが可能です。
 </p>
 <div style="text-align:center;">
-    <button type="button" class="btn btn-primary" onclick="location.href='/AuthSample/index.php'" style="width: 90%;">ホームへ戻る</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='/{$SERVICE_ROOT}/index.php'" style="width: 90%;">ホームへ戻る</button>
 </div>
 EOF;
 
     // テンプレートファイル読み込み
-    include dirname(__FILE__).'/Template/BaseTemplate.php';
+    include dirname(__FILE__).'/../Template/BaseTemplate.php';
 }else{
     // メール送信後でなければログイン画面に推移
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

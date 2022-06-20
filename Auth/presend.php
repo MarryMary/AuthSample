@@ -3,8 +3,9 @@
  * メール送信後画面（全機能共通）
  */
 //必要ファイルのインクルード
-include 'Tools/Session.php';
-include 'Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Tools/Session.php';
+include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッションの開始
 SessionStarter();
@@ -38,13 +39,13 @@ if(SessionIsIn('finished')){
 24時間以内にメールに記載されたURLから手続きをお願い致します。
 </p>
 <div style="text-align:center;">
-<button type="button" class="btn btn-primary" onclick="location.href='/AuthSample/mypage.php'" style="width: 90%;">戻る</button>
+<button type="button" class="btn btn-primary" onclick="location.href='/{$SERVICE_ROOT}/MyPage/home.php'" style="width: 90%;">戻る</button>
 </div>
 EOF;
 
     // テンプレートファイル読み込み
-    include dirname(__FILE__).'/Template/BaseTemplate.php';
+    include dirname(__FILE__).'/../Template/BaseTemplate.php';
 }else{
     // メール送信後でなければログイン画面に推移
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

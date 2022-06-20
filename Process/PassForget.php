@@ -6,6 +6,7 @@
 include dirname(__FILE__).'/../Tools/Session.php';
 include dirname(__FILE__).'/../Tools/SQL.php';
 include dirname(__FILE__).'/../Tools/ValidateAndSecure.php';
+include dirname(__FILE__).'/../Template/ServiceData.php';
 
 // セッションの開始
 SessionStarter();
@@ -52,32 +53,32 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
                         // 登録完了フラグを立ててリセット完了画面へ遷移
                         SessionInsert('registration', True);
-                        header('Location: /AuthSample/ResetFinish.php');
+                        header('Location: /'.$SERVICE_ROOT.'/Auth/ResetFinish.php');
                     // SQLが正しく実行できなかった場合
                     } else {
-                        header('Location: /AuthSample/login.php');
+                        header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
                     }
                 // 現在のパスワードと同じパスワードが送信された場合
                 }else{
                     SessionInsert('err', '現在のパスワードと同じパスワードを設定することはできません。');
-                    header('Location: /AuthSample/MainPasswordReset.php?token='.$token);
+                    header('Location: /'.$SERVICE_ROOT.'/Auth/MainPasswordReset.php?token='.$token);
                 }
             // パスワードのバリデーションに引っかかった場合
             }else{
                 SessionInsert('err', 'パスワードが条件に一致しません。');
-                header('Location: /AuthSample/MainPasswordReset.php?token='.$token);
+                header('Location: /'.$SERVICE_ROOT.'/Auth/MainPasswordReset.php?token='.$token);
             }
         // password1と2が一致しない場合
         }else{
             SessionInsert('err', 'パスワードが一致しません。');
-            header('Location: /AuthSample/MainPasswordReset.php?token='.$token);
+            header('Location: /'.$SERVICE_ROOT.'/Auth/MainPasswordReset.php?token='.$token);
         }
     // メールアドレスまたはパスワードが未入力の場合
     }else{
         SessionInsert('err', 'メールアドレスまたはパスワードが入力されていません。');
-        header('Location: /AuthSample/MainPasswordReset.php?token='.$token);
+        header('Location: /'.$SERVICE_ROOT.'/Auth/MainPasswordReset.php?token='.$token);
     }
 // POST送信ではない場合
 }else{
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

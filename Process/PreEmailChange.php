@@ -59,30 +59,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         // 登録完了フラグを立てて送信済み画面へ遷移
                         SessionInsert('finished', True);
                         SessionInsert('mailchange', True); 
-                        header('Location: /AuthSample/presend.php');
+                        header('Location: /'.$SERVICE_ROOT.'/Auth/presend.php');
                         // SQLが正しく実行できなかった場合
                     } else {
                         SessionInsert('err', 'エラーが発生しました。もう一度お試し下さい。');
-                        header('Location: /AuthSample/forget.php');
+                        header('Location: /'.$SERVICE_ROOT.'/Auth/forget.php');
                     }
                     // PDO接続解除
                     $pdo = null;
                 }else{
                     SessionInsert('err', 'パスワードが間違っています。');
-                    header('Location: /AuthSample/Change/email.php');
+                    header('Location: /'.$SERVICE_ROOT.'/Change/email.php');
                 }
                 // ユーザーテーブルにデータが無いかまたは仮ユーザーテーブルにデータが入っている場合
             }else{
                 SessionInsert('err', 'そのメールアドレスは他のアカウントに登録されているか、または既に貴方のアカウントに登録されている可能性があります。');
-                header('Location: /AuthSample/Change/email.php');
+                header('Location: /'.$SERVICE_ROOT.'/Change/email.php');
             }
         }
         // メールアドレスが入力されていない場合
     } else {
         SessionInsert('err', 'メールアドレスまたはパスワードが入力されていません。');
-        header('Location: /AuthSample/Change/email.php');
+        header('Location: /'.$SERVICE_ROOT.'/Change/email.php');
     }
 // POST送信ではない場合
 } else {
-    header('Location: /AuthSample/login.php');
+    header('Location: /'.$SERVICE_ROOT.'/Auth/login.php');
 }

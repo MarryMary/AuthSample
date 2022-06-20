@@ -14,7 +14,7 @@ SessionStarter();
 
 // もしログインしているか、ログインしていない場合
 if(!SessionIsIn('IsAuth') || !SessionIsIn('NeedTwoFactor') || SessionIsIn('IsAuth') && is_bool(SessionReader('IsAuth')) && SessionReader('IsAuth')){
-    header("location: /AuthSample/mypage.php");
+    header("location: /$SERVICE_ROOT/MyPage/home.php");
 }
 
 // idを基準にデータを取得
@@ -24,7 +24,7 @@ $res = $stmt->execute();
 
 // SQLを正しく実行できなかった場合
 if(!$res){
-    header("Location: /AuthSample/Process/Logout.php");
+    header("Location: /$SERVICE_ROOT/Process/Logout.php");
 // SQLを正しく実行できた場合
 }else{
     // データ取得
@@ -32,7 +32,7 @@ if(!$res){
 
     // データが存在しなかった場合
     if(is_bool($data)){
-        header("Location: /AuthSample/Process/Logout.php");
+        header("Location: /$SERVICE_ROOT/Process/Logout.php");
     // データが存在する場合
     }else{
         // 2段階認証のトークンがセッションに無いかまたは再生成が必要な場合
@@ -67,7 +67,7 @@ if(!$res){
 </form>
 EOF;
 
-        $scriptTo = 'JavaScript/Login.js';
+        $scriptTo = '/'.$SERVICE_ROOT.'/JavaScript/Login.js';
         $JS = '<script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>';
 
         include dirname(__FILE__).'/../Template/BaseTemplate.php';
