@@ -33,6 +33,10 @@ if(SessionIsIn('Recover') && SessionIsIn('UserId')){
 
 $title = 'Login';
 $card_name = 'ログイン';
+$address = '';
+if(isset($_COOKIE['SavedAuthAddress'])){
+    $address = $_COOKIE['SavedAuthAddress'];
+}
 
 // Googleシングル・サインオン用のJavaScriptを読み込み
 $GAuthJS = '<script src="https://accounts.google.com/gsi/client" async defer></script><div id="g_id_onload" data-client_id="345840626602-q37bp5di0lrr53n3bar423uhg90rff67.apps.googleusercontent.com" data-callback="AuthorizeStart"></div>';
@@ -40,7 +44,13 @@ $GAuthJS = '<script src="https://accounts.google.com/gsi/client" async defer></s
 // フォーム作成
 $form = <<<EOF
 <form action="Process/Auth.php" method="POST">
-    <input type='email' name='email' class="form-control" placeholder='メールアドレス' style='margin-bottom: 3%;'>
+    <input type='email' name='email' class="form-control" placeholder='メールアドレス' value="{$address}">
+    <div class="form-check" style='margin-bottom: 3%;'>
+        <input class="form-check-input" type="checkbox" value="SaveAddress" id="SaveAddress">
+        <label class="form-check-label" for="SaveAddress">
+            ログイン情報を保存する
+        </label>
+    </div>
     <input type='password' name='password' class="form-control" placeholder='パスワード' style='margin-bottom: 3%;'>
     <div style="text-align: center;">
         <button type='submit' class='btn btn-primary' style="width: 80%;">ログイン</button>

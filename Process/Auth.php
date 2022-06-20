@@ -34,6 +34,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 
                 // 論理削除状態でない場合
                 if($data['delete_flag'] != 1){
+                    if(isset($_POST['SaveAddress'])){
+                        setcookie('SavedAuthAddress', $_POST['email']);
+                    }
                     // 2段階認証が有効化されている場合
                     if($data['IsTwoFactor'] == 1){
                         // 2段階認証フラグとユーザーIDをセッションに代入、まだ認証されていないことをセッションに代入
