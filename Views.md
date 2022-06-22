@@ -6,13 +6,16 @@
 
 # ダッシュボード(マイページを想定して作成した画面)
 ## サイドバー展開状態
-<img width="1791" alt="スクリーンショット 2022-06-20 18 03 00" src="https://user-images.githubusercontent.com/92404990/174567201-a48862c7-7e2c-4fbe-b36c-647e556ef64b.png">
+<img width="1792" alt="スクリーンショット 2022-06-21 12 52 58" src="https://user-images.githubusercontent.com/92404990/174712849-c98fd673-733b-4404-9560-ecb66c4a2ef9.png">
+
 
 ## サイドバー未展開・未選択状態
-<img width="1792" alt="スクリーンショット 2022-06-20 17 58 31" src="https://user-images.githubusercontent.com/92404990/174566932-95dc05fd-fa50-4247-8aef-9674f09ce6c1.png">
+<img width="1792" alt="スクリーンショット 2022-06-21 12 35 25" src="https://user-images.githubusercontent.com/92404990/174711048-e0c42095-c0e4-44f9-8063-f4f1e82aa0e9.png">
+
 
 ## サイドバー未展開・選択状態
-<img width="1792" alt="スクリーンショット 2022-06-20 18 03 08" src="https://user-images.githubusercontent.com/92404990/174566964-87e271b8-1eec-4932-861a-5ea29c15673d.png">
+<img width="1792" alt="スクリーンショット 2022-06-21 12 37 19" src="https://user-images.githubusercontent.com/92404990/174711109-27708a3b-84b4-4690-998c-bf736338d19b.png">
+
 
 # ダッシュボード（プロフィール変更画面）
 <img width="1792" alt="スクリーンショット 2022-06-20 17 58 46" src="https://user-images.githubusercontent.com/92404990/174567237-e016ac9c-841e-4c09-9b25-2ffc8ab88c62.png">
