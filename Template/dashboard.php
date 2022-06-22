@@ -25,7 +25,7 @@
 
                 <div class="text logo-text">
                     <span class="name"><?=$name?></span>
-                    <span class="profession"></span>
+                    <p class="profession"></p>
                 </div>
             </div>
 
